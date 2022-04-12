@@ -7,8 +7,10 @@ trait HandlesReviews
 	public function create($request)
 	{
 		// todo: Validate the input data
-		
-		auth()->user()->reviews()
+
+		$review = auth()->user()->reviews()
 			->create($request->all());
+
+		return response($review);
 	}
 }

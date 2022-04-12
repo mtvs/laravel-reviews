@@ -30,11 +30,9 @@ class HandlesReviewsTest extends TestCase
 		$response = new TestResponse(
 			(new Pipeline($this->app))
 				->send($request)
-				->through([
-					// \Illuminate\Session\Middleware\StartSession::class,
-				])
+				->through([])
 				->then(function ($request) {
-					$this->create($request);
+					return $this->create($request);
 				})
 		);
 
@@ -42,5 +40,7 @@ class HandlesReviewsTest extends TestCase
 			'title' => $data['title'],
 			'user_id' => $user->id
 		]);
+
+		$response->assertSee($data['title']);
 	}
 }

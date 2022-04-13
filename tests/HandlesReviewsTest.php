@@ -69,6 +69,45 @@ class HandlesReviewsTest extends TestCase
 		// $response->assertStatus(422);
 	}
 
+	/** @test */
+	public function it_rejects_creating_multiple_reviews_from_single_user()
+	{
+		$user = UserFactory::new()->create();
+
+		$product = ProductFactory::new()->create();
+
+		$user->reviews()->save(
+			ReviewFactory::new()->make([
+				'reviewable_type' => get_class($product),
+				'reviewable_id' => $product->id,
+			])
+		);
+
+		$data = Reviewfactory::new()->raw([
+			'reviewable_type' => get_class($product),
+			'reviewable_id' => $product->id,
+		]);
+
+		$this->actingAs($user);
+
+		$request = Request::create('/reviews', 'POST', $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) {
+			return $this->create($request);
+		});
+
+		$this->assertDatabaseMissing('reviews', [
+			'title' => $data['title'],
+			'reviewable_type' => get_class($product),
+			'reviewable_id' => $product->id,
+			'user_id' => $user->id,
+		]);		
+
+		$response->assertStatus(403);
+	}
+
 	protected function handleRequestUsing(Request $request, callable $callback)
 	{
 		return new TestResponse(

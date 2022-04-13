@@ -12,7 +12,7 @@ trait HandlesReviews
 
 		$user = auth()->user();
 
-		// Reject reviews for the non exesign reviewables
+		// Reject the reviews for the non-existing reviewables
 		try {
 			$reviewable = $request['reviewable_type']::findOrFail(
 				$request['reviewable_id']
@@ -21,6 +21,12 @@ trait HandlesReviews
 			abort(422, "Unprocessable Entity");
 		} catch(\Throwable $e) {
 			abort(422, "Unprocessable Entity");
+		}
+
+		// Reject multiple reviews from a signle user
+		if ($user->hasAlreadyReviewed($reviewable))
+		{
+			return response()->json([], 403);
 		}
 
 		$review = $user->reviews()

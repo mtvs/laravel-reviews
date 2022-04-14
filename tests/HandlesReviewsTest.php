@@ -108,6 +108,67 @@ class HandlesReviewsTest extends TestCase
 		$response->assertStatus(403);
 	}
 
+	/** @test */
+	public function it_can_update_a_review()
+	{
+		$user = UserFactory::new()->create();
+
+		$review = $user->reviews()->save(
+			ReviewFactory::new()->make()
+		);
+
+		$data = Reviewfactory::new()->raw();
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->update($id, $request);
+		});
+
+		$this->assertDatabaseHas('reviews', [
+			'id' => $review->id,
+			'title' => $data['title'],
+			'user_id' => $user->id,
+		]);
+
+		$response->assertSee($data['title']);
+	}
+
+	/** @test */
+	public function it_rejects_updating_a_review_that_does_not_belong_to_the_user()
+	{
+		$user = UserFactory::new()->create();
+
+		$review = Reviewfactory::new()->create();
+
+		$data = Reviewfactory::new()->raw();
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->update($id, $request);
+		});
+
+		$this->assertDatabaseMissing('reviews', [
+			'id' => $review->id,
+			'title' => $data['title']
+		]);
+
+		$response->assertStatus(404);
+	}
+
 	protected function handleRequestUsing(Request $request, callable $callback)
 	{
 		return new TestResponse(

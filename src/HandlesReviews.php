@@ -3,10 +3,11 @@
 namespace Reviews;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 trait HandlesReviews
 {
-	public function create($request)
+	public function create(Request $request)
 	{
 		// todo: Validate the input data
 
@@ -33,5 +34,21 @@ trait HandlesReviews
 			->create($request->all());
 
 		return response($review);
+	}
+
+	public function update($id, Request $request)
+	{
+		// todo: Validate the input data
+
+		$user = auth()->user();
+
+		if (! $review = $user->reviews()->find($id)) 
+		{
+			return response('', 404);
+		}
+
+		$review->update($request->all());
+
+		return response()->json($review);
 	}
 }

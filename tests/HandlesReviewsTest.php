@@ -44,12 +44,10 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_creating_reviews_for_non_existing_reviewables()
 	{
-		$this->expectException(HttpException::class);
-
 		$user = UserFactory::new()->create();
 
 		$data = Reviewfactory::new()->raw([
-			'reviewable_id' => 0,
+			'reviewable_id' => 1000000,
 		]);
 
 		$this->actingAs($user);
@@ -62,11 +60,11 @@ class HandlesReviewsTest extends TestCase
 			return $this->create($request);
 		});
 
-		// $this->assertDatabaseMissing('reviews', [
-		// 	'reviewable_id' => 0,
-		// ]);
+		$this->assertDatabaseMissing('reviews', [
+			'title' => $data['title'],
+		]);
 
-		// $response->assertStatus(422);
+		$response->assertStatus(422);
 	}
 
 	/** @test */

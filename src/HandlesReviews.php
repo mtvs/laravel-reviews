@@ -19,9 +19,9 @@ trait HandlesReviews
 				$request['reviewable_id']
 			);
 		} catch(ModelNotFoundException $e) {
-			abort(422, "Unprocessable Entity");
+			return response('', 422);
 		} catch(\Throwable $e) {
-			abort(422, "Unprocessable Entity");
+			return response('', 422);
 		}
 
 		// Reject multiple reviews from a signle user

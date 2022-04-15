@@ -47,7 +47,9 @@ trait HandlesReviews
 			return response('', 404);
 		}
 
-		$review->update($request->all());
+		$review->update(
+			\Arr::except($request->all(), ['reviewable_type', 'reviewable_id'])
+		);
 
 		return response()->json($review);
 	}

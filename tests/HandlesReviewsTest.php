@@ -176,6 +176,39 @@ class HandlesReviewsTest extends TestCase
 		$response->assertStatus(404);
 	}
 
+	/** @test */
+	public function it_ignores_updating_the_reviewable_fields_of_reviews()
+	{
+		$user = UserFactory::new()->create();
+
+		$review = $user->reviews()->save(
+			ReviewFactory::new()->make()
+		);
+		
+		$data = Reviewfactory::new()->raw([
+			'reviewable_type' => "NewClass",
+			'reviewable_id' => 2,
+		]);
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->controller->update($id, $request);
+		});
+
+		$this->assertDatabaseHas('reviews', [
+			'id' => $review->id,
+			'reviewable_type' => $review->reviewable_type,
+			'reviewable_id' => $review->reviewable_id,
+		]);
+	}
+
 		/** @test */
 	public function it_can_delete_a_review()
 	{

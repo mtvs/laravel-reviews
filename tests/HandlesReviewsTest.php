@@ -176,6 +176,60 @@ class HandlesReviewsTest extends TestCase
 		$response->assertStatus(404);
 	}
 
+		/** @test */
+	public function it_can_delete_a_review()
+	{
+		$user = UserFactory::new()->create();
+
+		$review = $user->reviews()->save(
+			ReviewFactory::new()->make()
+		);
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/reviews/{$id}", 'DELETE', [], [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->controller->delete($id, $request);
+		});
+
+		$this->assertDatabaseMissing('reviews', [
+			'id' => $review->id,
+		]);
+
+		$response->assertStatus(200);
+	}
+
+	/** @test */
+	public function it_rejects_deleting_a_review_that_does_not_belong_to_the_user()
+	{
+		$user = UserFactory::new()->create();
+
+		$review = Reviewfactory::new()->create();
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/reviews/{$id}", 'DELETE', [], [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->controller->delete($id, $request);
+		}); 
+
+		$this->assertDatabaseHas('reviews', [
+			'id' => $review->id,
+		]);
+
+		$response->assertStatus(404);
+	}
+
 	protected function handleRequestUsing(Request $request, callable $callback)
 	{
 		return new TestResponse(

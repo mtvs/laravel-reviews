@@ -51,4 +51,18 @@ trait HandlesReviews
 
 		return response()->json($review);
 	}
+
+	public function delete($id, Request $request)
+	{
+		$user = auth()->user();
+
+		if (! $review = $user->reviews()->find($id)) 
+		{
+			return response('', 404);
+		}
+
+		$review->delete();
+
+		return response('');
+	}
 }

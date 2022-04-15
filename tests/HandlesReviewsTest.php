@@ -14,7 +14,16 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandlesReviewsTest extends TestCase
 {
-	use HandlesReviews;
+	protected $controller;
+
+	public function setup(): void
+	{
+		parent::setup();
+
+		$this->controller = new class {
+			use HandlesReviews;
+		};
+	}
 
 	/** @test */
 	public function it_can_create_a_review()
@@ -30,7 +39,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) {
-			return $this->create($request);
+			return $this->controller->create($request);
 		});
 
 		$this->assertDatabaseHas('reviews', [
@@ -57,7 +66,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) {
-			return $this->create($request);
+			return $this->controller->create($request);
 		});
 
 		$this->assertDatabaseMissing('reviews', [
@@ -93,7 +102,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) {
-			return $this->create($request);
+			return $this->controller->create($request);
 		});
 
 		$this->assertDatabaseMissing('reviews', [
@@ -126,7 +135,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
-			return $this->update($id, $request);
+			return $this->controller->update($id, $request);
 		});
 
 		$this->assertDatabaseHas('reviews', [
@@ -156,7 +165,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
-			return $this->update($id, $request);
+			return $this->controller->update($id, $request);
 		});
 
 		$this->assertDatabaseMissing('reviews', [

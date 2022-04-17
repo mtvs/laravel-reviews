@@ -3,8 +3,6 @@
 namespace Reviews\Tests;
 
 use Illuminate\Http\Request;
-use Illuminate\Pipeline\Pipeline;
-use Illuminate\Testing\TestResponse;
 use Reviews\Review;
 use Reviews\HandlesReviews;
 use Reviews\Tests\Database\Factories\ReviewFactory;
@@ -261,15 +259,5 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response->assertStatus(404);
-	}
-
-	protected function handleRequestUsing(Request $request, callable $callback)
-	{
-		return new TestResponse(
-			(new Pipeline($this->app))
-				->send($request)
-				->through([])
-				->then($callback)
-		);
 	}
 }

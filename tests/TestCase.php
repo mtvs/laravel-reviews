@@ -2,6 +2,9 @@
 
 namespace Reviews\Tests;
 
+use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
+use Illuminate\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Reviews\ReviewsServiceProvider;
 use Reviews\Tests\Models\User;
@@ -13,6 +16,13 @@ abstract class TestCase extends Orchestra
 		parent::setup();
 
 		$this->app['config']->set('auth.providers.users.model', User::class);
+		$this->app['config']->set('reviews.reviewables', [
+			[
+				'class' => '\Reviews\Tests\Models\Product',
+				'route_type' => 'product',
+				'key_name' => 'id',
+			],
+		]);
 
 		$this->loadLaravelMigrations();
 		$this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -22,5 +32,15 @@ abstract class TestCase extends Orchestra
 	protected function getPackageProviders($app)
 	{
 		return [ReviewsServiceProvider::class];
+	}
+
+	protected function handleRequestUsing(Request $request, callable $callback)
+	{
+		return new TestResponse(
+			(new Pipeline($this->app))
+				->send($request)
+				->through([])
+				->then($callback)
+		);
 	}
 }

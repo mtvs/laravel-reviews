@@ -20,7 +20,8 @@ trait IndexesReviews
 			abort(404);
 		}
 
-		// todo: eager-load the user relations on the reviews
-		return response($reviewable->reviews()->paginate());
+		$reviews = $reviewable->reviews()->with('user')->paginate();
+
+		return response($reviews);
 	}
 }

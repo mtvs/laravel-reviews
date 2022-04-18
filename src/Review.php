@@ -12,4 +12,9 @@ class Review extends Model
 		'rating', 'title', 'body','recommend',
 		'reviewable_type', 'reviewable_id',
 	];
+
+	public function user()
+	{
+		return $this->belongsTo(config('auth.providers.users.model'));
+	}
 }

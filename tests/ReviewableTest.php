@@ -42,4 +42,25 @@ class ReviewableTest extends TestCase
 		$this->assertEquals($products[1]->id, $highestRated[0]->id);
 		$this->assertEquals($products[2]->id, $highestRated->last()->id);
 	}
+
+	/** @test */
+	public function it_can_eager_load_the_ratings()
+	{
+		
+		$product = ProductFactory::new()->create();
+
+		$product->reviews()->saveMany([
+			ReviewFactory::new()->create([
+				'rating' => 5
+			]),
+			ReviewFactory::new()->create([
+				'rating' => 4
+			])
+		]);
+
+		$result = Product::withRatings()->find($product->id);
+
+		$this->assertEquals(4.5, $result->rating_avg);
+		$this->assertEquals(2, $result->rating_count);
+	}
 }

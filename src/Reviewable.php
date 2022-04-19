@@ -26,4 +26,11 @@ trait Reviewable
 				$totalAverage, $averageCount, $averageCount
 			]);
 	}
+
+	public function scopeWithRatings($query)
+	{
+		// todo: get the rating column from the review class
+		$query->withAvg('reviews as rating_avg', 'rating')
+			->withCount('reviews as rating_count');
+	}
 }

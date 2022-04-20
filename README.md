@@ -1,10 +1,9 @@
 # Laravel Reviews
 
-This packages abstracts the code required to have reviews and ratings for the laravel's
-Eloquent models.
+This package provides reviews and ratings for the Laravel's Eloquent models.
 
-It enables the users to review the models and the admin to approve those
-reviews to be shown.
+It enables the users to rate and review the reviewable models. Then admin can
+choose to approve the reviews to let them be shown.
 
 It adds the rating values, `rating_average` and `rating_count`, to a model from
 its reviews.

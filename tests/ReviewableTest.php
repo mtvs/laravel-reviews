@@ -60,7 +60,7 @@ class ReviewableTest extends TestCase
 
 		$result = Product::withRatings()->find($product->id);
 
-		$this->assertEquals(4.5, $result->rating_avg);
-		$this->assertEquals(2, $result->rating_count);
+		$this->assertEquals(4.5, $result->ratings_avg);
+		$this->assertEquals(2, $result->ratings_count);
 	}
 }

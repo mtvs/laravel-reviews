@@ -27,7 +27,7 @@ trait Reviewable
 
 	public function scopeWithRatings($query)
 	{
-		$query->withAvg('reviews as rating_avg', 'rating')
-			->withCount('reviews as rating_count');
+		$query->withAvg('reviews as ratings_avg', 'rating')
+			->withCount('reviews as ratings_count');
 	}
 }

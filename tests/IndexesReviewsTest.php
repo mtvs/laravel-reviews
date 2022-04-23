@@ -16,9 +16,11 @@ class IndexesReviewsTest extends TestCase
 	{
 		$product = ProductFactory::new()->create();
 
-		$product->reviews()->saveMany(
-			$reviews = ReviewFactory::times(3)->make()
-		);
+		$product->reviews()->saveMany($reviews = [
+			ReviewFactory::new()->approved()->make(),
+			ReviewFactory::new()->suspended()->make(),
+			ReviewFactory::new()->rejected()->make(),
+		]);
 
 		$request = Request::create("/product/{$product->id}/reviews");
 
@@ -28,8 +30,8 @@ class IndexesReviewsTest extends TestCase
 			return $this->index('product', $id);
 		});
 
-		foreach ($reviews as $review) {
-			$response->assertSee($review->title);
-		}
+		$response->assertSee($reviews[0]->title);
+		$response->assertDontSee($reviews[1]->title);
+		$response->assertDontSee($reviews[2]->title);
 	}
 }

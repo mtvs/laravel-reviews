@@ -13,7 +13,7 @@ trait PerformsReviews
 
 	public function hasAlreadyReviewed(Model $reviewable): bool
 	{
-		return $this->reviews()->where([
+		return $this->reviews()->anyApprovalStatus()->where([
 			'reviewable_type' => get_class($reviewable),
 			'reviewable_id' => $reviewable->getKey(),
 		])->count() > 0;

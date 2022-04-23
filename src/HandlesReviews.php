@@ -42,10 +42,7 @@ trait HandlesReviews
 
 		$user = auth()->user();
 
-		if (! $review = $user->reviews()->find($id)) 
-		{
-			return response('', 404);
-		}
+		$review = $this->findReviewByUserOrFail($id, $user);
 
 		$review->update(
 			\Arr::except($request->all(), ['reviewable_type', 'reviewable_id'])
@@ -58,13 +55,15 @@ trait HandlesReviews
 	{
 		$user = auth()->user();
 
-		if (! $review = $user->reviews()->find($id)) 
-		{
-			return response('', 404);
-		}
+		$review = $this->findReviewByUserOrFail($id, $user);
 
 		$review->delete();
 
 		return response('');
+	}
+
+	protected function findReviewByUserOrFail($id, $user)
+	{
+		return $user->reviews()->anyApprovalStatus()->findOrFail($id);
 	}
 }

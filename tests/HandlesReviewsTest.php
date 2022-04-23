@@ -9,6 +9,9 @@ use Reviews\Tests\Database\Factories\ReviewFactory;
 use Reviews\Tests\Database\Factories\productFactory;
 use Reviews\Tests\Database\Factories\UserFactory;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Arr;
+use Mtvs\EloquentApproval\ApprovalStatuses;
 
 class HandlesReviewsTest extends TestCase
 {
@@ -54,7 +57,7 @@ class HandlesReviewsTest extends TestCase
 		$user = UserFactory::new()->create();
 
 		$data = Reviewfactory::new()->raw([
-			'reviewable_id' => 1000000,
+			'reviewable_id' => 100,
 		]);
 
 		$this->actingAs($user);
@@ -148,6 +151,8 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_updating_a_review_that_does_not_belong_to_the_user()
 	{
+		$this->expectException(ModelNotFoundException::class);
+
 		$user = UserFactory::new()->create();
 
 		$review = Reviewfactory::new()->create();
@@ -166,12 +171,67 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->update($id, $request);
 		});
 
-		$this->assertDatabaseMissing('reviews', [
-			'id' => $review->id,
-			'title' => $data['title']
+		// $this->assertDatabaseMissing('reviews', [
+		// 	'id' => $review->id,
+		// 	'title' => $data['title']
+		// ]);
+
+		// $response->assertStatus(404);
+	}
+
+	/** @test */
+	public function it_suspends_reviews_after_an_update_accordingly()
+	{
+		$user = UserFactory::new()->create();
+
+		$review = $user->reviews()->save(
+			ReviewFactory::new()->approved()->make([
+				'rating' => 5,
+				'recommend' => true,
+			])
+		);
+
+		$data = array_merge($review->getAttributes(), Arr::only(
+			Reviewfactory::new()->raw(), ['title', 'bodt']
+		));
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/reviews/{$id}", "PUT", $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
 		]);
 
-		$response->assertStatus(404);
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->controller->update($id, $request);
+		});
+
+		$this->assertDatabaseHas('reviews', [
+			'id' => $review->id,
+			'approval_status' => ApprovalStatuses::PENDING,
+		]);
+
+		$review->refresh();
+		$review->approve();
+
+		$data = array_merge($review->getAttributes(), [
+			'rating' => 1,
+			'recommend' => false,
+		]);
+
+		$request = Request::create("/reviews/{$id}", "PUT", $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->controller->update($id, $request);
+		});
+
+		$this->assertDatabaseHas('reviews', [
+			'id' => $review->id,
+			'approval_status' => ApprovalStatuses::APPROVED,
+		]);
 	}
 
 	/** @test */
@@ -238,6 +298,8 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_deleting_a_review_that_does_not_belong_to_the_user()
 	{
+		$this->expectException(ModelNotFoundException::class);
+
 		$user = UserFactory::new()->create();
 
 		$review = Reviewfactory::new()->create();
@@ -254,10 +316,10 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->delete($id, $request);
 		}); 
 
-		$this->assertDatabaseHas('reviews', [
-			'id' => $review->id,
-		]);
+		// $this->assertDatabaseHas('reviews', [
+		// 	'id' => $review->id,
+		// ]);
 
-		$response->assertStatus(404);
+		// $response->assertStatus(404);
 	}
 }

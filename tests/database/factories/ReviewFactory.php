@@ -3,6 +3,7 @@
 namespace Reviews\Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Mtvs\EloquentApproval\ApprovableFactory;
 use Reviews\Review;
 use Reviews\Tests\Database\Factories\UserFactory;
 use Reviews\Tests\Database\Factories\ProductFactory;
@@ -10,6 +11,8 @@ use Reviews\Tests\Models\Product;
 
 class ReviewFactory extends Factory
 {
+	use ApprovableFactory;
+
 	protected $model = Review::class;
 
 	public function definition()

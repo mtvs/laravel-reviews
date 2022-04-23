@@ -13,9 +13,9 @@ trait Reviewable
 	{
 		$reviewClass = app('review_class');
 
-		$totalAverage = $reviewClass::where('reviewable_type', get_class($this))
+		$totalAverage = $reviewClass::where('reviewable_type', get_called_class())
 		->avg('rating');
-		$averageCount = $reviewClass::where('reviewable_type', get_class($this))
+		$averageCount = $reviewClass::where('reviewable_type', get_called_class())
 		->count() / $this->count();
 
 		$query->withAvg('reviews as itemAverage', 'rating')

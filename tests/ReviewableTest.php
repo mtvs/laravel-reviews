@@ -14,33 +14,33 @@ class ReviewableTest extends TestCase
 		$products = ProductFactory::times(4)->create();
 
 		$products[0]->reviews()->saveMany(
-			ReviewFactory::times(1)->make([
+			ReviewFactory::times(1)->approved()->make([
 				'rating' => 5
 			])
 		);
 
 		$products[1]->reviews()->saveMany(
-			ReviewFactory::times(4)->make([
+			ReviewFactory::times(4)->approved()->make([
 				'rating' => 5
 			])
 		);
 
 		$products[2]->reviews()->saveMany(
-			ReviewFactory::times(4)->make([
+			ReviewFactory::times(1)->approved()->make([
 				'rating' => 1
 			])
-		);
+		);	
 
 		$products[3]->reviews()->saveMany(
-			ReviewFactory::times(1)->make([
+			ReviewFactory::times(4)->approved()->make([
 				'rating' => 1
 			])
-		);				
+		);					
 
 		$highestRated = Product::query()->highestRated()->get();
 
 		$this->assertEquals($products[1]->id, $highestRated[0]->id);
-		$this->assertEquals($products[2]->id, $highestRated->last()->id);
+		$this->assertEquals($products[3]->id, $highestRated->last()->id);
 	}
 
 	/** @test */
@@ -50,10 +50,10 @@ class ReviewableTest extends TestCase
 		$product = ProductFactory::new()->create();
 
 		$product->reviews()->saveMany([
-			ReviewFactory::new()->create([
+			ReviewFactory::new()->approved()->make([
 				'rating' => 5
 			]),
-			ReviewFactory::new()->create([
+			ReviewFactory::new()->approved()->make([
 				'rating' => 4
 			])
 		]);

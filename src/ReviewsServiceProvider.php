@@ -4,11 +4,14 @@ namespace Reviews;
 
 use Illuminate\Support\ServiceProvider;
 use Reviews\Commands\ControllersCommand;
+use Illuminate\Support\Facades\Route;
 
 class ReviewsServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
+		Route::mixin(new ReviewsRoutes);
+
 		$this->publishes([
 			__DIR__.'/../config/reviews.php' => config_path('reviews.php')
 		]);

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 trait HandlesReviews
 {
-	public function create(Request $request)
+	public function store(Request $request)
 	{
 		// todo: Validate the input data
 

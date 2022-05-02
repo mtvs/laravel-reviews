@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Reviews\HandlesReviews;
+use Reviews\IndexesReviews;
+
+class ReviewsController extends Controller
+{
+	use HandlesReviews, IndexesReviews;
+}

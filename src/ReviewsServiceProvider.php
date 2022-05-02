@@ -3,6 +3,7 @@
 namespace Reviews;
 
 use Illuminate\Support\ServiceProvider;
+use Reviews\Commands\ControllersCommand;
 
 class ReviewsServiceProvider extends ServiceProvider
 {
@@ -16,5 +17,11 @@ class ReviewsServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->app->bind('review_class', Review::class);
+
+		if ($this->app->runningInConsole()) {
+			$this->commands([
+				ControllersCommand::class,
+			]);
+		}
 	}
 }

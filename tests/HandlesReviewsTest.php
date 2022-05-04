@@ -40,7 +40,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) {
-			return $this->controller->create($request);
+			return $this->controller->store($request);
 		});
 
 		$this->assertDatabaseHas('reviews', [
@@ -67,7 +67,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) {
-			return $this->controller->create($request);
+			return $this->controller->store($request);
 		});
 
 		$this->assertDatabaseMissing('reviews', [
@@ -103,7 +103,7 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) {
-			return $this->controller->create($request);
+			return $this->controller->store($request);
 		});
 
 		$this->assertDatabaseMissing('reviews', [

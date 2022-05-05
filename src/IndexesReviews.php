@@ -7,18 +7,17 @@ trait IndexesReviews
 	public function index($routetype, $key)
 	{
 		foreach (config('reviews.reviewables') as $reviewable) {
-			if ($reviewable['route_type'] == $routetype) {
-				$class = $reviewable['class'];
-				$keyName = $reviewable['key_name'];
+			if ((new $reviewable)->getRouteType() == $routetype) {
+				$class = $reviewable;
 				break;
 			}
 		}
 
-		try {
-			$reviewable = $class::where($keyName, $key)->firstOrFail();
-		} catch (\Throwable) {
+		if (! isset($class)) {
 			abort(404);
 		}
+
+		$reviewable = $class::findOrFail($key);
 
 		$reviews = $reviewable->reviews()->with('user')->paginate();
 

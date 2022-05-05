@@ -2,8 +2,18 @@
 
 namespace Reviews;
 
+use Illuminate\Support\Str;
+
 trait Reviewable
 {
+	public function getRouteType()
+	{
+		$name = (new \ReflectionClass(get_called_class()))
+			->getShortName();
+
+		return Str::snake($name, '-');
+	}
+
 	public function reviews()
 	{
 		return $this->morphMany(app('review_class'), 'reviewable');

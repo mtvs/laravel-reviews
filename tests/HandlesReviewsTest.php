@@ -54,6 +54,8 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_creating_reviews_for_non_existing_reviewables()
 	{
+		$this->expectException(HttpException::class);
+		
 		$user = UserFactory::new()->create();
 
 		$data = Reviewfactory::new()->raw([
@@ -70,16 +72,18 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->store($request);
 		});
 
-		$this->assertDatabaseMissing('reviews', [
-			'title' => $data['title'],
-		]);
+		// $this->assertDatabaseMissing('reviews', [
+		// 	'title' => $data['title'],
+		// ]);
 
-		$response->assertStatus(422);
+		// $response->assertStatus(422);
 	}
 
 	/** @test */
 	public function it_rejects_creating_multiple_reviews_from_single_user()
 	{
+		$this->expectException(HttpException::class);
+
 		$user = UserFactory::new()->create();
 
 		$product = ProductFactory::new()->create();
@@ -106,14 +110,14 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->store($request);
 		});
 
-		$this->assertDatabaseMissing('reviews', [
-			'title' => $data['title'],
-			'reviewable_type' => get_class($product),
-			'reviewable_id' => $product->id,
-			'user_id' => $user->id,
-		]);		
+		// $this->assertDatabaseMissing('reviews', [
+		// 	'title' => $data['title'],
+		// 	'reviewable_type' => get_class($product),
+		// 	'reviewable_id' => $product->id,
+		// 	'user_id' => $user->id,
+		// ]);		
 
-		$response->assertStatus(403);
+		// $response->assertStatus(403);
 	}
 
 	/** @test */

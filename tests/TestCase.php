@@ -32,11 +32,11 @@ abstract class TestCase extends Orchestra
 
 	protected function handleRequestUsing(Request $request, callable $callback)
 	{
-		return new TestResponse(
+		return new TestResponse(response(
 			(new Pipeline($this->app))
 				->send($request)
 				->through([])
 				->then($callback)
-		);
+		));
 	}
 }

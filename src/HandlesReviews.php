@@ -19,21 +19,21 @@ trait HandlesReviews
 				$request['reviewable_id']
 			);
 		} catch(ModelNotFoundException $e) {
-			return response('', 422);
+			abort(422);
 		} catch(\Throwable $e) {
-			return response('', 422);
+			abort(422);
 		}
 
 		// Reject multiple reviews from a signle user
 		if ($user->hasAlreadyReviewed($reviewable))
 		{
-			return response()->json([], 403);
+			return abort(403);
 		}
 
 		$review = $user->reviews()
 			->create($request->all());
 
-		return response($review);
+		return $review;
 	}
 
 	public function update($id, Request $request)
@@ -48,7 +48,7 @@ trait HandlesReviews
 			\Arr::except($request->all(), ['reviewable_type', 'reviewable_id'])
 		);
 
-		return response()->json($review);
+		return $review;
 	}
 
 	public function delete($id, Request $request)
@@ -58,8 +58,6 @@ trait HandlesReviews
 		$review = $this->findReviewByUserOrFail($id, $user);
 
 		$review->delete();
-
-		return response('');
 	}
 
 	protected function findReviewByUserOrFail($id, $user)

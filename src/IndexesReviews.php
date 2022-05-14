@@ -21,6 +21,6 @@ trait IndexesReviews
 
 		$reviews = $reviewable->reviews()->with('user')->paginate();
 
-		return response($reviews);
+		return $reviews;
 	}
 }

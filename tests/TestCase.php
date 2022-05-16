@@ -5,6 +5,7 @@ namespace Reviews\Tests;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Testing\TestResponse;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Reviews\ReviewsServiceProvider;
 use Reviews\Tests\Models\User;
@@ -14,6 +15,8 @@ abstract class TestCase extends Orchestra
 	public function setup(): void
 	{
 		parent::setup();
+
+		$this->withoutExceptionHandling();
 
 		$this->app['config']->set('auth.providers.users.model', User::class);
 		$this->app['config']->set('reviews.reviewables', [
@@ -32,11 +35,21 @@ abstract class TestCase extends Orchestra
 
 	protected function handleRequestUsing(Request $request, callable $callback)
 	{
-		return new TestResponse(response(
-			(new Pipeline($this->app))
-				->send($request)
-				->through([])
-				->then($callback)
-		));
+		try {
+			$response = response(
+				(new Pipeline($this->app))
+					->send($request)
+					->through([])
+					->then($callback)
+			);
+		} catch (\Throwable $e) {
+			$this->app[ExceptionHandler::class]
+				->report($e);
+
+			$response = $this->app[ExceptionHandler::class]
+				->render($request, $e);
+		}
+
+		return new TestResponse($response);
 	}
 }

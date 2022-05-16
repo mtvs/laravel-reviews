@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Reviews\Review;
 use Reviews\HandlesReviews;
 use Reviews\Tests\Database\Factories\ReviewFactory;
-use Reviews\Tests\Database\Factories\productFactory;
+use Reviews\Tests\Database\Factories\ProductFactory;
 use Reviews\Tests\Database\Factories\UserFactory;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -54,8 +54,8 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_creating_reviews_for_non_existing_reviewables()
 	{
-		$this->expectException(HttpException::class);
-		
+		$this->withExceptionHandling();
+
 		$user = UserFactory::new()->create();
 
 		$data = Reviewfactory::new()->raw([
@@ -72,17 +72,17 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->store($request);
 		});
 
-		// $this->assertDatabaseMissing('reviews', [
-		// 	'title' => $data['title'],
-		// ]);
+		$this->assertDatabaseMissing('reviews', [
+			'title' => $data['title'],
+		]);
 
-		// $response->assertStatus(422);
+		$response->assertStatus(422);
 	}
 
 	/** @test */
 	public function it_rejects_creating_multiple_reviews_from_single_user()
 	{
-		$this->expectException(HttpException::class);
+		$this->withExceptionHandling();
 
 		$user = UserFactory::new()->create();
 
@@ -110,14 +110,14 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->store($request);
 		});
 
-		// $this->assertDatabaseMissing('reviews', [
-		// 	'title' => $data['title'],
-		// 	'reviewable_type' => get_class($product),
-		// 	'reviewable_id' => $product->id,
-		// 	'user_id' => $user->id,
-		// ]);		
+		$this->assertDatabaseMissing('reviews', [
+			'title' => $data['title'],
+			'reviewable_type' => get_class($product),
+			'reviewable_id' => $product->id,
+			'user_id' => $user->id,
+		]);		
 
-		// $response->assertStatus(403);
+		$response->assertStatus(403);
 	}
 
 	/** @test */
@@ -155,7 +155,7 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_updating_a_review_that_does_not_belong_to_the_user()
 	{
-		$this->expectException(ModelNotFoundException::class);
+		$this->withExceptionHandling();
 
 		$user = UserFactory::new()->create();
 
@@ -175,12 +175,12 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->update($id, $request);
 		});
 
-		// $this->assertDatabaseMissing('reviews', [
-		// 	'id' => $review->id,
-		// 	'title' => $data['title']
-		// ]);
+		$this->assertDatabaseMissing('reviews', [
+			'id' => $review->id,
+			'title' => $data['title']
+		]);
 
-		// $response->assertStatus(404);
+		$response->assertStatus(404);
 	}
 
 	/** @test */
@@ -302,7 +302,7 @@ class HandlesReviewsTest extends TestCase
 	/** @test */
 	public function it_rejects_deleting_a_review_that_does_not_belong_to_the_user()
 	{
-		$this->expectException(ModelNotFoundException::class);
+		$this->withExceptionHandling();
 
 		$user = UserFactory::new()->create();
 
@@ -320,10 +320,10 @@ class HandlesReviewsTest extends TestCase
 			return $this->controller->delete($id, $request);
 		}); 
 
-		// $this->assertDatabaseHas('reviews', [
-		// 	'id' => $review->id,
-		// ]);
+		$this->assertDatabaseHas('reviews', [
+			'id' => $review->id,
+		]);
 
-		// $response->assertStatus(404);
+		$response->assertStatus(404);
 	}
 }

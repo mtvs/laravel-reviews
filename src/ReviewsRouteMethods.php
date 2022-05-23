@@ -2,7 +2,7 @@
 
 namespace Reviews;
 
-class ReviewsRoutes
+class ReviewsRouteMethods
 {
 	public function reviews()
 	{

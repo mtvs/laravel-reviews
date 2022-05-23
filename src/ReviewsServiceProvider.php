@@ -10,7 +10,7 @@ class ReviewsServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
-		Route::mixin(new ReviewsRoutes);
+		Route::mixin(new ReviewsRouteMethods);
 
 		$this->publishes([
 			__DIR__.'/../config/reviews.php' => config_path('reviews.php')

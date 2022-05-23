@@ -135,7 +135,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -167,7 +167,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -203,7 +203,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/reviews/{$id}", "PUT", $data, [], [], [
+		$request = Request::create("/review/{$id}", "PUT", $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -224,7 +224,7 @@ class HandlesReviewsTest extends TestCase
 			'recommend' => false,
 		]);
 
-		$request = Request::create("/reviews/{$id}", "PUT", $data, [], [], [
+		$request = Request::create("/review/{$id}", "PUT", $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -256,7 +256,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -284,7 +284,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/reviews/{$id}", 'DELETE', [], [], [], [
+		$request = Request::create("/review/{$id}", 'DELETE', [], [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -312,7 +312,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/reviews/{$id}", 'DELETE', [], [], [], [
+		$request = Request::create("/review/{$id}", 'DELETE', [], [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 

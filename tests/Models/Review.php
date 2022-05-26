@@ -1,13 +1,15 @@
 <?php
 
-namespace Reviews;
+namespace Reviews\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Mtvs\EloquentApproval\Approvable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Reviews\ReviewConcerns;
+use Reviews\Tests\Database\Factories\ReviewFactory;
 
 class Review extends Model
 {
-	use Approvable;
+	use HasFactory, ReviewConcerns;
 
 	const RATING_MAX = 5;
 
@@ -25,10 +27,5 @@ class Review extends Model
 		return [
 			'title', 'body',
 		];
-	}
-
-	public function user()
-	{
-		return $this->belongsTo(config('auth.providers.users.model'));
 	}
 }

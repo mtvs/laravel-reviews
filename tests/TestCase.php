@@ -8,6 +8,7 @@ use Illuminate\Testing\TestResponse;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Reviews\ReviewsServiceProvider;
+use Reviews\Tests\Models\Review;
 use Reviews\Tests\Models\User;
 
 abstract class TestCase extends Orchestra
@@ -18,6 +19,7 @@ abstract class TestCase extends Orchestra
 
 		$this->withoutExceptionHandling();
 
+		$this->app->bind('review_class', Review::class);
 		$this->app['config']->set('auth.providers.users.model', User::class);
 		$this->app['config']->set('reviews.reviewables', [
 			'\Reviews\Tests\Models\Product',

@@ -3,8 +3,10 @@
 namespace Reviews;
 
 use Illuminate\Support\ServiceProvider;
-use Reviews\Commands\ControllersCommand;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Blade;
+use Reviews\Commands\ControllersCommand;
+use Reviews\View\Components\Reviews;
 
 class ReviewsServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,8 @@ class ReviewsServiceProvider extends ServiceProvider
 		$this->publishes([
 			__DIR__.'/../config/reviews.php' => config_path('reviews.php')
 		]);
+
+		Blade::component('reviews', Reviews::class);
 	}
 
 	public function register()

@@ -23,8 +23,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedBigInteger('reviewable_id');
             $table->string('reviewable_type');
             $table->timestamps();
-            $table->tinyInteger('approval_status');
-            $table->timestamp('approval_at')->nullable();
+            $table->approvals();
         });
     }
 

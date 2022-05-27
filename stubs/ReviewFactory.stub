@@ -24,7 +24,7 @@ class ReviewFactory extends Factory
 			'user_id' => function () {
 				return config('auth.providers.users.model')::factory()->create();
 			},
-			'reviewable_type' => $reviewable_class = $this->faker->randomeElements(
+			'reviewable_type' => $reviewable_class = $this->faker->randomElements(
 				config('reviews.reviewables')
 			)[0],
 			'reviewable_id' => function () use($reviewable_class) {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Mtvs\EloquentApproval\ApprovalServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Reviews\ReviewsServiceProvider;
 use Reviews\Tests\Models\Review;
@@ -32,7 +33,10 @@ abstract class TestCase extends Orchestra
 
 	protected function getPackageProviders($app)
 	{
-		return [ReviewsServiceProvider::class];
+		return [
+			ReviewsServiceProvider::class,
+			ApprovalServiceProvider::class,
+		];
 	}
 
 	protected function handleRequestUsing(Request $request, callable $callback)

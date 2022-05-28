@@ -3,18 +3,18 @@
 		<div class="card" v-if="authCheck">
 			<div class="card-body">
 				<form>		
-					<div class="form-group">
+					<div class="mb-3">
 			            <rating-stars :score="form.rating"
 			            	@score-selected="(score) => form.rating = score"/>
 			        </div>
 
-			        <div class="form-group">
+			        <div class="mb-3">
 			            <input type="text" class="form-control" 
 			            	v-model="form.title"
 			            	placeholder="Enter the title."></input>
 			        </div>
 
-			        <div class="form-group">
+			        <div class="mb-3">
 			            <textarea class="form-control" 
 			            	v-model="form.body"
 			            	placeholder="Write your review."></textarea>

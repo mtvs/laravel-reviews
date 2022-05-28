@@ -1,32 +1,38 @@
 <template>
-	<div class="card">
-		<div class="card-body">
-			<form>		
-				<div class="form-group">
-		            <rating-stars :score="form.rating"
-		            	@score-selected="(score) => form.rating = score"/>
-		        </div>
+	<div>
+		<div class="card" v-if="authCheck">
+			<div class="card-body">
+				<form>		
+					<div class="form-group">
+			            <rating-stars :score="form.rating"
+			            	@score-selected="(score) => form.rating = score"/>
+			        </div>
 
-		        <div class="form-group">
-		            <input type="text" class="form-control" 
-		            	v-model="form.title"
-		            	placeholder="Enter the title."></input>
-		        </div>
+			        <div class="form-group">
+			            <input type="text" class="form-control" 
+			            	v-model="form.title"
+			            	placeholder="Enter the title."></input>
+			        </div>
 
-		        <div class="form-group">
-		            <textarea class="form-control" 
-		            	v-model="form.body"
-		            	placeholder="Write your review."></textarea>
-		        </div>
+			        <div class="form-group">
+			            <textarea class="form-control" 
+			            	v-model="form.body"
+			            	placeholder="Write your review."></textarea>
+			        </div>
 
 
-	        	<button type="button" class="btn btn-secondary"
-	        		v-if="review" @click="$emit('edit-cancelled')">
-	        			Cancel</button>
+		        	<button type="button" class="btn btn-secondary"
+		        		v-if="review" @click="$emit('edit-cancelled')">
+		        			Cancel</button>
 
-		        <button type="button" class="btn btn-primary"
-		        	@click="review ? update () : create()">Submit</button>
-		    </form>
+			        <button type="button" class="btn btn-primary"
+			        	@click="review ? update () : create()">Submit</button>
+			    </form>
+			</div>
+		</div>	
+
+		<div class="alert alert-info" v-else>
+			{{ authMessage }}
 		</div>
 	</div>
 </template>
@@ -49,7 +55,9 @@ export default {
 	props: [
 		'reviewableType',
 		'reviewableId',
-		'review'
+		'review',
+		'authCheck',
+		'authMessage'
 	],
 
 	methods: {

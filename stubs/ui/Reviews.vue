@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-if="paginator">
+		<div class="mb-3" v-if="paginator">
 			<reviews-list :reviews="paginator.data"></reviews-list>
 
 			<pagination :data="paginator"
@@ -12,6 +12,8 @@
 				:reviewable-type="reviewableType"
 				:reviewable-id="reviewableId"
 				:review="oldReview"
+				:auth-check="authCheck"
+				:auth-message="authMessage"
 				@review-created="reviewCreated"
 				@review-updated="reviewUpdated"
 				@edit-cancelled="editCancelled"/>
@@ -38,7 +40,9 @@ export default {
 		'indexUrl',
 		'reviewableType',
 		'reviewableId',
-		'userReview',
+		'authCheck',
+		'authMessage',
+		'userReview'
 	],
 
 	created() {

@@ -33,6 +33,8 @@ class Reviews extends Component
 			'index-url' => $this->indexUrl(),
 			'reviewable-type' => get_class($this->reviewable),
 			'reviewable-id' => $this->reviewable->getKey(),
+			':auth-check' => auth()->check(),
+			'auth-message' => 'Please login to be able to post a review.',
 			':user-review' => $this->userReview(),
 		];
 
@@ -45,7 +47,7 @@ class Reviews extends Component
 	{
 		return implode(' ', array_map(
 			function ($key, $value) {
-				if (! is_scalar($value)) {
+				if (strpos($key, ':') === 0) {
 					$value = json_encode($value);
 				}
 

@@ -3,7 +3,6 @@
 namespace Reviews\Tests;
 
 use Illuminate\Http\Request;
-use Reviews\Review;
 use Reviews\HandlesReviews;
 use Reviews\Tests\Database\Factories\ReviewFactory;
 use Reviews\Tests\Database\Factories\ProductFactory;
@@ -11,7 +10,9 @@ use Reviews\Tests\Database\Factories\UserFactory;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 use Mtvs\EloquentApproval\ApprovalStatuses;
+use Reviews\Tests\Models\Review;
 
 class HandlesReviewsTest extends TestCase
 {
@@ -23,6 +24,15 @@ class HandlesReviewsTest extends TestCase
 
 		$this->controller = new class {
 			use HandlesReviews;
+
+			protected function validator(array $data)
+			{
+				return Validator::make($data, [
+					'rating' => ['required', 'numeric', 'min:1', 'max:'.Review::RATING_MAX],
+					'title' => ['required', 'string', 'max:255'],
+					'body' => ['required', 'string'],
+				]);
+			}
 		};
 	}
 
@@ -49,6 +59,38 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response->assertSee($data['title']);
+	}
+
+	/** @test */
+	public function it_vaidates_the_input_before_creating_a_review()
+	{
+		$this->withExceptionHandling();
+
+		$user = UserFactory::new()->create();
+
+		$data = Reviewfactory::new()->raw([
+			'rating' => 0,
+			'title' => '',
+			'body' => '',
+		]);
+
+		$this->actingAs($user);
+
+		$request = Request::create('/reviews', 'POST', $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) {
+			return $this->controller->store($request);
+		});
+
+		$this->assertDatabaseMissing('reviews', [
+			'rating' => $data['rating'],
+			'title' => $data['title'],
+			'body' => $data['body'],
+		]);
+
+		$response->assertStatus(422);
 	}
 
 	/** @test */
@@ -150,6 +192,45 @@ class HandlesReviewsTest extends TestCase
 		]);
 
 		$response->assertSee($data['title']);
+	}
+
+	/** @test */
+	public function it_vaidates_the_input_before_updating_a_review()
+	{
+		$this->withExceptionHandling();
+
+		$user = UserFactory::new()->create();
+
+		$review = $user->reviews()->save(
+			ReviewFactory::new()->make()
+		);
+
+		$data = Reviewfactory::new()->raw([
+			'rating' => 0,
+			'title' => '',
+			'body' => '',
+		]);
+
+		$this->actingAs($user);
+
+		$id = $review->id;
+
+		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
+			'HTTP_ACCEPT' => 'application/json',
+		]);
+
+		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
+			return $this->controller->update($id, $request);
+		});
+
+		$this->assertDatabaseMissing('reviews', [
+			'id' => 1,
+			'rating' => $data['rating'],
+			'title' => $data['title'],
+			'body' => $data['body'],
+		]);
+
+		$response->assertStatus(422);
 	}
 
 	/** @test */

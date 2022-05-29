@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Reviews\HandlesReviews;
 use Reviews\IndexesReviews;
+use App\Http\Controllers\Controller;
+use App\Models\Review;
 
 class ReviewsController extends Controller
 {
 	use HandlesReviews, IndexesReviews;
+
+	protected function validator(array $data)
+	{
+		return Validator::make($data, [
+			'rating' => ['required', 'numeric', 'min:1', 'max:'.Review::RATING_MAX],
+			'title' => ['required', 'string', 'max:255'],
+			'body' => ['required', 'string'],
+		]);
+	}
 }

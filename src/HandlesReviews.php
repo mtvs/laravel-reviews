@@ -9,7 +9,7 @@ trait HandlesReviews
 {
 	public function store(Request $request)
 	{
-		// todo: Validate the input data
+		$this->validator($request->all())->validate();
 
 		$user = auth()->user();
 
@@ -38,7 +38,7 @@ trait HandlesReviews
 
 	public function update($id, Request $request)
 	{
-		// todo: Validate the input data
+		$this->validator($request->all())->validate();
 
 		$user = auth()->user();
 

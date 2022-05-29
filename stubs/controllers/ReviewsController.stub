@@ -12,6 +12,11 @@ class ReviewsController extends Controller
 {
 	use HandlesReviews, IndexesReviews;
 
+	public function __construct()
+	{
+		$this->middleware('auth', ['except' => ['index']]);
+	}
+
 	protected function validator(array $data)
 	{
 		return Validator::make($data, [

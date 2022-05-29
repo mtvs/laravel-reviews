@@ -2,7 +2,7 @@
 	<div>
 		<div class="card" v-if="authCheck">
 			<div class="card-body">
-				<form>		
+				<form @submit.prevent="review ? update () : create(); ">		
 					<div class="mb-3">
 			            <div :class="{'is-invalid': errors.rating}">
 			            	<rating-stars :score="form.rating"
@@ -40,8 +40,9 @@
 		        		v-if="review" @click="$emit('edit-cancelled')">
 		        			Cancel</button>
 
-			        <button type="button" class="btn btn-primary"
-			        	@click="review ? update () : create()">Submit</button>
+			        <button type="submit" class="btn btn-primary">
+			        	Submit
+			        </button>
 			    </form>
 			</div>
 		</div>	

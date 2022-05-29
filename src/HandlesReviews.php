@@ -11,18 +11,19 @@ trait HandlesReviews
 	{
 		$this->validator($request->all())->validate();
 
-		$user = auth()->user();
-
-		// Reject the reviews for the non-existing reviewables
-		try {
-			$reviewable = $request['reviewable_type']::findOrFail(
-				$request['reviewable_id']
-			);
-		} catch(ModelNotFoundException $e) {
-			abort(422);
-		} catch(\Throwable $e) {
+		if (! in_array(
+				$request['reviewable_type'], config('reviews.reviewables')
+			)) {
 			abort(422);
 		}
+
+		if (! $reviewable = $request['reviewable_type']::find(
+			$request['reviewable_id']
+		)) {
+			abort(422);
+		}
+
+		$user = auth()->user();
 
 		// Reject multiple reviews from a signle user
 		if ($user->hasAlreadyReviewed($reviewable))

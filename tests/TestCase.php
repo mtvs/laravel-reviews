@@ -23,7 +23,7 @@ abstract class TestCase extends Orchestra
 		$this->app->bind('review_class', Review::class);
 		$this->app['config']->set('auth.providers.users.model', User::class);
 		$this->app['config']->set('reviews.reviewables', [
-			'\Reviews\Tests\Models\Product',
+			'Reviews\Tests\Models\Product',
 		]);
 
 		$this->loadLaravelMigrations();

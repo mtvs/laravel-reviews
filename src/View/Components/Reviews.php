@@ -30,11 +30,10 @@ class Reviews extends Component
 	public function render()
 	{
 		$props = [
-			'index-url' => $this->indexUrl(),
+			'reviewable-slug' => $this->reviewable->getRouteType(),
 			'reviewable-type' => get_class($this->reviewable),
 			'reviewable-id' => $this->reviewable->getKey(),
 			':auth-check' => auth()->check(),
-			'auth-message' => 'Please login to be able to post a review.',
 			':user-review' => $this->userReview(),
 		];
 

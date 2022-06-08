@@ -13,7 +13,6 @@
 				:reviewable-id="reviewableId"
 				:review="oldReview"
 				:auth-check="authCheck"
-				:auth-message="authMessage"
 				@review-created="reviewCreated"
 				@review-updated="reviewUpdated"
 				@edit-cancelled="editCancelled"/>
@@ -37,16 +36,15 @@ export default {
 	},
 
 	props: [
-		'indexUrl',
+		'reviewableSlug',
 		'reviewableType',
 		'reviewableId',
 		'authCheck',
-		'authMessage',
 		'userReview'
 	],
 
 	created() {
-		this.getPage(this.indexUrl)
+		this.getPage(`/${this.reviewableSlug}/${this.reviewableId}/reviews`)
 	},
 
 	methods: {

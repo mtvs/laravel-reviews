@@ -48,7 +48,7 @@
 		</div>	
 
 		<div class="alert alert-info" v-else>
-			{{ authMessage }}
+			Please login to be able to post a review.
 		</div>
 	</div>
 </template>
@@ -71,7 +71,6 @@ export default {
 
 	props: [
 		'authCheck',
-		'authMessage',
 		'reviewableType',
 		'reviewableId',
 		'review',

@@ -1,11 +1,9 @@
 <template>
 	<div>
-		<div class="card" :class="'border-'+approvalContext">
+		<div class="card">
 			<div class="card-header d-flex justify-content-between">
 				<div>
-					<span class="badge" :class="'bg-'+approvalContext">
-						{{ review.approval_status }}
-					</span>
+					<approval-status :value="review.approval_status"/>
 				</div>
 
 				<div>
@@ -50,20 +48,6 @@
 		props: [
 			'review'
 		],
-
-		computed: {
-			approvalContext() {
-				if (this.review.approval_status == 'pending') {
-					return 'warning'
-				}
-				else if (this.review.approval_status == 'approved') {
-					return 'success'
-				}
-				else if (this.review.approval_status == 'rejected') {
-					return 'danger'
-				}
-			}
-		},
 
 		methods: {
 			deleteReview() {

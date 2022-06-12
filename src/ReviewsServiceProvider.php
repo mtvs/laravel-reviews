@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 use Reviews\Commands\ControllersCommand;
 use Reviews\View\Components\Reviews;
+use Reviews\View\Components\Ratings;
 
 class ReviewsServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,10 @@ class ReviewsServiceProvider extends ServiceProvider
 		]);
 
 		Blade::component('reviews', Reviews::class);
+
+		Blade::component('ratings', Ratings::class);
+
+		$this->loadViewsFrom(__DIR__.'/../resources/views', 'reviews');
 	}
 
 	public function register()

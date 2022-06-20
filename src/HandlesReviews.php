@@ -14,13 +14,13 @@ trait HandlesReviews
 		if (! in_array(
 				$request['reviewable_type'], config('reviews.reviewables')
 			)) {
-			abort(422);
+			abort(422, "The reviewable_type does not exist.");
 		}
 
 		if (! $reviewable = $request['reviewable_type']::find(
 			$request['reviewable_id']
 		)) {
-			abort(422);
+			abort(422, "The reviewable_id does not exist.");
 		}
 
 		$user = auth()->user();

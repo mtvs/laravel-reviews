@@ -28,7 +28,7 @@ trait HandlesReviews
 		// Reject multiple reviews from a signle user
 		if ($user->hasAlreadyReviewed($reviewable))
 		{
-			return abort(403);
+			return abort(403, 'It has already been reviewed by the user.');
 		}
 
 		$review = $user->reviews()

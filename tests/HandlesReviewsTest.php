@@ -334,10 +334,7 @@ class HandlesReviewsTest extends TestCase
 			ReviewFactory::new()->make()
 		);
 		
-		$data = Reviewfactory::new()->raw([
-			'reviewable_type' => "NewClass",
-			'reviewable_id' => 2,
-		]);
+		$data = Reviewfactory::new()->raw();
 
 		$this->actingAs($user);
 
@@ -353,6 +350,7 @@ class HandlesReviewsTest extends TestCase
 
 		$this->assertDatabaseHas('reviews', [
 			'id' => $review->id,
+			'title' => $data['title'],
 			'reviewable_type' => $review->reviewable_type,
 			'reviewable_id' => $review->reviewable_id,
 		]);

@@ -279,7 +279,7 @@ class HandlesReviewsTest extends TestCase
 		);
 
 		$data = array_merge($review->getAttributes(), Arr::only(
-			Reviewfactory::new()->raw(), ['title', 'bodt']
+			Reviewfactory::new()->raw(), ['title', 'body']
 		));
 
 		$this->actingAs($user);
@@ -296,6 +296,8 @@ class HandlesReviewsTest extends TestCase
 
 		$this->assertDatabaseHas('reviews', [
 			'id' => $review->id,
+			'title' => $data['title'],
+			'body' => $data['body'],
 			'approval_status' => ApprovalStatuses::PENDING,
 		]);
 
@@ -317,6 +319,8 @@ class HandlesReviewsTest extends TestCase
 
 		$this->assertDatabaseHas('reviews', [
 			'id' => $review->id,
+			'rating' => $data['rating'],
+			'recommend' => $data['recommend'],
 			'approval_status' => ApprovalStatuses::APPROVED,
 		]);
 	}

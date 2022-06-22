@@ -32,21 +32,25 @@ trait HandlesReviews
 		}
 
 		$review = $user->reviews()
-			->create($request->all());
+			->make($request->all())
+			->reviewable()
+			->associate($reviewable);
+
+		$review->save();
 
 		return $review;
 	}
 
 	public function update($id, Request $request)
 	{
-		$this->validator($request->all())->validate();
-
 		$user = auth()->user();
 
 		$review = $this->findReviewByUserOrFail($id, $user);
 
+		$this->validator($request->all())->validate();
+
 		$review->update(
-			\Arr::except($request->all(), ['reviewable_type', 'reviewable_id'])
+			$request->all()
 		);
 
 		return $review;

@@ -55,7 +55,9 @@ class HandlesReviewsTest extends TestCase
 
 		$this->assertDatabaseHas('reviews', [
 			'title' => $data['title'],
-			'user_id' => $user->id
+			'user_id' => $user->id,
+			'reviewable_type' => $data['reviewable_type'],
+			'reviewable_id' => $data['reviewable_id'],
 		]);
 
 		$response->assertSee($data['title']);

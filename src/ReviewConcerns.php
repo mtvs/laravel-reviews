@@ -14,6 +14,11 @@ trait ReviewConcerns
 		return $this->belongsTo(config('auth.providers.users.model'));
 	}
 
+	public function reviewable()
+	{
+		return $this->morphTo();
+	}
+
 	public function scopeReviewable($query, Model $reviewable)
 	{
 		$query->where([

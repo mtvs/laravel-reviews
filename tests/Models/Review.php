@@ -19,7 +19,6 @@ class Review extends Model
 
 	protected $fillable = [
 		'rating', 'title', 'body','recommend',
-		'reviewable_type', 'reviewable_id',
 	];
 
 	public function approvalRequired()

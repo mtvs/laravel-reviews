@@ -63,4 +63,36 @@ class ReviewableTest extends TestCase
 		$this->assertEquals(4.5, $result->ratings_avg);
 		$this->assertEquals(2, $result->ratings_count);
 	}
+
+	/** @test */	
+	public function it_can_get_the_rating_ratios()
+	{
+		$product = ProductFactory::new()->create();
+
+		$product->reviews()->saveMany(array_merge(
+			ReviewFactory::times(1)->approved()->make([
+				'rating' => 2
+			])->all(),
+
+			ReviewFactory::times(2)->approved()->make([
+				'rating' => 3
+			])->all(),
+
+			ReviewFactory::times(5)->approved()->make([
+				'rating' => 4
+			])->all(),
+
+			ReviewFactory::times(2)->approved()->make([
+				'rating' => 5
+			])->all()
+		));
+
+		$this->assertEquals([
+			1 => 0,	
+			2 => 10,	
+			3 => 20,
+			4 => 50,
+			5 => 20
+		], $product->ratingRatios());
+	}
 }

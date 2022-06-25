@@ -13,12 +13,14 @@ class Ratings extends Component
 	public $average;
 	public $count;
 	public $max;
+	public $ratios;
 
-	public function __construct($average, $count, $max)
+	public function __construct($average, $count, $max, $ratios = null)
 	{
 		$this->average = $average;
 		$this->count = $count;
 		$this->max = $max;
+		$this->ratios = $ratios;
 	}
 
 	public function starIcon($n)

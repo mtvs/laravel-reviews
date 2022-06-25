@@ -19,6 +19,35 @@ trait Reviewable
 		return $this->morphMany(app('review_class'), 'reviewable');
 	}
 
+	public function ratingRatios()
+	{
+		$ratios = [];
+
+		$total = $this->reviews()->count();
+
+		$this->reviews()->groupBy('rating')
+			->selectRaw('rating, count(*) as count')
+			->get()
+			->each(function($group) use (&$ratios, $total) {
+				$ratios[$group->rating] = round($group->count / $total * 100);
+			});
+
+		foreach(range(1, app('review_class')::RATING_MAX) as $rating) {
+			if (! array_key_exists($rating, $ratios)) {
+				$ratios[$rating] = 0;
+			}
+		}
+
+		ksort($ratios);
+
+		return $ratios;
+	}
+
+	public function getRatingRatiosAttribute()
+	{
+		return $this->ratingRatios();
+	}
+
 	public function scopeHighestRated($query)
 	{
 		$reviewClass = app('review_class');

@@ -28,7 +28,7 @@ class HandlesReviewsTest extends TestCase
 			protected function validator(array $data)
 			{
 				return Validator::make($data, [
-					'rating' => ['required', 'numeric', 'min:1', 'max:'.Review::RATING_MAX],
+					'rating' => ['required', 'numeric', 'min:1', 'max:'.config('reviews.rating_max')],
 					'title' => ['required', 'string', 'max:255'],
 					'body' => ['required', 'string'],
 				]);

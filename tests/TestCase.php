@@ -20,6 +20,7 @@ abstract class TestCase extends Orchestra
 
 		$this->withoutExceptionHandling();
 
+		$this->app['config']->set('reviews', require(__DIR__.'/../config/reviews.php'));
 		$this->app['config']->set('reviews.model', Review::class);
 		$this->app['config']->set('auth.providers.users.model', User::class);
 		$this->app['config']->set('reviews.reviewables', [

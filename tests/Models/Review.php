@@ -11,8 +11,6 @@ class Review extends Model
 {
 	use HasFactory, ReviewConcerns;
 
-	const RATING_MAX = 5;
-
 	protected $dates = [
 		'approval_at',
 	];

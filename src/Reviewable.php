@@ -16,12 +16,12 @@ trait Reviewable
 
 	public function reviews()
 	{
-		return $this->morphMany(app('review_class'), 'reviewable');
+		return $this->morphMany(config('reviews.model'), 'reviewable');
 	}
 
 	public function scopeHighestRated($query)
 	{
-		$reviewClass = app('review_class');
+		$reviewClass = config('reviews.model');
 
 		$totalAverage = $reviewClass::where('reviewable_type', get_called_class())
 		->avg('rating');

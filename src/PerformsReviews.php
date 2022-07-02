@@ -8,7 +8,7 @@ trait PerformsReviews
 {
 	public function reviews()
 	{
-		return $this->hasMany(app('review_class'));
+		return $this->hasMany(config('reviews.model'));
 	}
 
 	public function hasAlreadyReviewed(Model $reviewable): bool

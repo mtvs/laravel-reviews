@@ -18,7 +18,7 @@ class ReviewFactory extends Factory
 	{
 		return [
 			'rating' => $this->faker
-				->numberBetween(1, app('review_class')::RATING_MAX),
+				->numberBetween(1, config('reviews.model')::RATING_MAX),
 			'title' => $this->faker->sentence,
 			'body' => $this->faker->paragraph,
 			'recommend' => $this->faker->boolean,

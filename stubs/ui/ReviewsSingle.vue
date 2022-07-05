@@ -8,9 +8,7 @@
 			{{ review.title }}
 		</h4>
 
-		<div>
-			{{ review.body }}
-		</div>
+		<div v-html="body"></div>
 	</div>
 </template>
 
@@ -18,6 +16,14 @@
 	export default {
 		props: [
 			'review',
-		]
+		],
+
+		computed: {
+			body() {
+				var escaped = _.escape(this.review.body)
+
+				return escaped.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+			}
+		}
 	}
 </script>

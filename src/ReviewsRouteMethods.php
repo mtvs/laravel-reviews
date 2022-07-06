@@ -23,12 +23,12 @@ class ReviewsRouteMethods
 				}
 
 				if ($options['update'] ?? true) {
-					$this->put('/reviews/{id}', 'ReviewsController@update')
+					$this->put('/reviews/{key}', 'ReviewsController@update')
 						->name('reviews.update');
 				}
 
 				if ($options['destroy'] ?? true) {
-					$this->delete('/reviews/{id}', 'ReviewsController@destroy')
+					$this->delete('/reviews/{key}', 'ReviewsController@destroy')
 						->name('reviews.destroy');
 				}
 			});

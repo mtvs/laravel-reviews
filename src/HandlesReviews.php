@@ -56,7 +56,7 @@ trait HandlesReviews
 		return $review;
 	}
 
-	public function delete($id, Request $request)
+	public function destroy($id, Request $request)
 	{
 		$user = auth()->user();
 

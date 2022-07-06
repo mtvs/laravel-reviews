@@ -18,7 +18,6 @@ class CreateReviewsTable extends Migration
             $table->tinyInteger('rating');
             $table->string('title');
             $table->text('body');
-            $table->boolean('recommend');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('reviewable_id');
             $table->string('reviewable_type');

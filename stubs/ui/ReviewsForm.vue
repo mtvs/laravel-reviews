@@ -58,7 +58,6 @@ export default {
 	data() {
 		var form = {
 			rating: this.review ? this.review.rating : null,
-			recommend: true,
 			title: this.review ? this.review.title : null,
 			body: this.review ? this.review.body : null
 		}

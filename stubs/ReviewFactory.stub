@@ -20,7 +20,6 @@ class ReviewFactory extends Factory
 				->numberBetween(1, config('reviews.rating_max')),
 			'title' => $this->faker->sentence,
 			'body' => $this->faker->paragraph,
-			'recommend' => $this->faker->boolean,
 			'user_id' => function () {
 				return config('auth.providers.users.model')::factory()->create();
 			},

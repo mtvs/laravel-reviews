@@ -274,7 +274,6 @@ class HandlesReviewsTest extends TestCase
 		$review = $user->reviews()->save(
 			ReviewFactory::new()->approved()->make([
 				'rating' => 5,
-				'recommend' => true,
 			])
 		);
 
@@ -306,7 +305,6 @@ class HandlesReviewsTest extends TestCase
 
 		$data = array_merge($review->getAttributes(), [
 			'rating' => 1,
-			'recommend' => false,
 		]);
 
 		$request = Request::create("/review/{$id}", "PUT", $data, [], [], [
@@ -320,7 +318,6 @@ class HandlesReviewsTest extends TestCase
 		$this->assertDatabaseHas('reviews', [
 			'id' => $review->id,
 			'rating' => $data['rating'],
-			'recommend' => $data['recommend'],
 			'approval_status' => ApprovalStatuses::APPROVED,
 		]);
 	}

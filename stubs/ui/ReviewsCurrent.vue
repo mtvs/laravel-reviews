@@ -51,7 +51,7 @@
 
 		methods: {
 			deleteReview() {
-				axios.delete(`/review/${this.review.id}`)
+				axios.delete(`/reviews/${this.review.id}`)
 					.then(() => { this.$emit('review-deleted') })
 			}
 		}

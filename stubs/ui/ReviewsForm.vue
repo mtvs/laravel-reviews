@@ -93,7 +93,7 @@ export default {
 		},
 
 		update() {
-			axios.put(`/review/${this.review.id}`, {
+			axios.put(`/reviews/${this.review.id}`, {
 				... this.form
 			}).then(({data}) => {
 				this.$emit('review-updated', data)

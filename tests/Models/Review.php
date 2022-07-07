@@ -11,6 +11,8 @@ class Review extends Model
 {
 	use HasFactory, ReviewConcerns;
 
+	protected $with = ['user'];
+
 	protected $dates = [
 		'approval_at',
 	];

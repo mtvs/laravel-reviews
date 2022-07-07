@@ -11,7 +11,6 @@ trait IndexesReviews
 		return config('reviews.model')::query()
 			->where('reviewable_type', $request['reviewable_type'])
 			->where('reviewable_id', $request['reviewable_id'])
-			->with('user')
 			->paginate()->withQueryString();
 	}
 }

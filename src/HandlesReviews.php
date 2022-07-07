@@ -38,7 +38,7 @@ trait HandlesReviews
 
 		$review->save();
 
-		return $review;
+		return $review->load('user');
 	}
 
 	public function update($key, Request $request)

@@ -13,7 +13,7 @@ class ReviewsRouteMethods
 
 			$this->group(['namespace' => $namespace], function () use($options) {
 				if ($options['index'] ?? true) {
-					$this->get('/{type}/{key}/reviews', 'ReviewsController@index')
+					$this->get('/reviews', 'ReviewsController@index')
 						->name('reviews.index');
 				}
 

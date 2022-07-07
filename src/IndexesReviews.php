@@ -2,30 +2,16 @@
 
 namespace Reviews;
 
+use Illuminate\Http\Request;
+
 trait IndexesReviews
 {
-	public function index($routetype, $key)
+	public function index(Request $request)
 	{
-		$reviewable = $this->findReviewableOrFail($routetype, $key);
-
-		$reviews = $reviewable->reviews()->with('user')->paginate();
-
-		return $reviews;
-	}
-
-	protected function findReviewableOrFail($routetype, $key)
-	{
-		foreach (config('reviews.reviewables') as $reviewable) {
-			if ((new $reviewable)->getRouteType() == $routetype) {
-				$class = $reviewable;
-				break;
-			}
-		}
-
-		if (! isset($class)) {
-			abort(404);
-		}
-
-		return $class::findOrFail($key);;
+		return config('reviews.model')::query()
+			->where('reviewable_type', $request['reviewable_type'])
+			->where('reviewable_id', $request['reviewable_id'])
+			->with('user')
+			->paginate()->withQueryString();
 	}
 }

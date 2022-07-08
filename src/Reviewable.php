@@ -32,4 +32,11 @@ trait Reviewable
 		$query->withAvg('reviews as ratings_avg', 'rating')
 			->withCount('reviews as ratings_count');
 	}
+
+	public function loadRatings()
+	{
+		$this->ratings_avg = $this->reviews()->avg('rating');
+
+		$this->ratings_count = $this->reviews()->count();
+	}
 }

@@ -1,80 +1,12 @@
 # Laravel Reviews
 
-This package provides reviews and ratings for the Laravel's Eloquent models.
+Ratings and reviews for the Laravel's Eloquent models.
 
-It enables the users to rate and review the reviewable models. Then admin can
-choose to approve the reviews to let them be shown.
+Users will be able to rate and review the reviewable models. Then these reviews
+can be approved and be shown.
 
-It adds the rating values, `rating_average` and `rating_count`, to a model from
-its reviews.
+You will be able to load the ratings average and count on a reviewable model 
+and display them.
 
-It provides the abilty to sort the models to which reviews belong based on their
-rating from the reviwes using the Bayesian algorithm.
-
-## Components
-
-### The Review Schema
-
-It specifies the DB table structure.
-
-* id
-* rating
-* title
-* body
-* recommend
-* user_id
-* reviewable_type
-* reviewable_id
-
-
-### The Review Model
-
-It defines the relations to the `User` and `Reviewable` models.
-
-* reviewable()
-* user()
-
-### The Reviewable Trait
-
-It defines the relation to the `Review` model. And it loads the rating
-aggregations on the model. Also it provides the ability to sort the models
-based on their rating by defining a query scope to do that.
-
-* reviews()
-* withRating()
-* scopeHigestRated()
-
-### The `PerformsReviews` Trait
-
-It defines the necessary methods for the `User` model that perform the reviews.
-
-* reviews()
-* hasReviewed($reviewable): bool
-
-
-### The Reviews View
-
-It lists the reviews of a specefied model. It also provides the UI to the user
-to review a product.
-
-### The User's Reviews Controller
-
-It defines the method to handle the CRUD operations to
-enable a user to review a model.
-
-* index()
-* create()
-* update()
-* delete()
-
-### The Admin's Reviews View
-
-It lists the reviews for the adminstration. It provides the UI to approve the
-reviews.
-
-### The Admin's Reviews Controller
-
-It handles the listing and approval of the reviews for the admin.
-
-* index()
-* setApprovalStatus()
+It will provide the ability to sort the reviewables based on their
+ratings average using the Bayesian algorithm.

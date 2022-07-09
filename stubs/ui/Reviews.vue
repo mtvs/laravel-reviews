@@ -36,6 +36,7 @@ export default {
 	},
 
 	props: [
+		'reviewableSlug',
 		'reviewableType',
 		'reviewableId',
 		'authCheck',
@@ -43,14 +44,7 @@ export default {
 	],
 
 	created() {
-		let baseUrl = '/reviews'
-
-		let reviewableQuery = `reviewable_type=${this.reviewableType}&
-			reviewable_id=${this.reviewableId}`
-			
-		let url = baseUrl + '?'	 + reviewableQuery
-
-		this.getPage(url)
+		this.getPage(`/${this.reviewableSlug}/${this.reviewableId}/reviews`)
 	},
 
 	methods: {

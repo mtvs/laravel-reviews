@@ -18,9 +18,9 @@ ratings average using the Bayesian algorithm.
 composer require 
 
 ```
-Then publish the files that are supposed to be in your codebase. They're the 
-review model, its database migration, its database factory, the HTTP controller
-and the config file. 
+Then publish the files that are supposed to be in your codebase in order to be
+customizable by you. They're the review model, its database migration, its 
+database factory, the HTTP controller and the config file. 
 
 ```sh
 
@@ -82,3 +82,4 @@ You also have to specify the reviewable models in the reviews config file.
 	\App\Models\Product::class,	
 ],
 ```
+

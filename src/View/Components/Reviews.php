@@ -13,14 +13,6 @@ class Reviews extends Component
 		$this->reviewable = $reviewable;
 	}
 
-	public function indexUrl()
-	{
-		return route('reviews.index',[ 
-			'type' => $this->reviewable->getRouteType(),
-			'key' => $this->reviewable->getRouteKey()
-		]);
-	}
-
 	public function userReview()
 	{
 		return auth()->guest() ? null :

@@ -12,13 +12,16 @@ class Ratings extends Component
 
 	public $average;
 	public $count;
-	public $max;
 
-	public function __construct($average, $count, $max)
+	public function __construct($average, $count)
 	{
 		$this->average = $average;
 		$this->count = $count;
-		$this->max = $max;
+	}
+
+	public function max()
+	{
+		return config('reviews.rating_max');
 	}
 
 	public function starIcon($n)
@@ -31,7 +34,7 @@ class Ratings extends Component
 			if ($d > 0.75) {
 				return static::STAR_EMPTY_ICON;
 			}
-			elseif ($d < 0.25) {
+			elseif ($d <= 0.25) {
 				return static::STAR_FULL_ICON;
 			}
 			

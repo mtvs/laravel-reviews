@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="card" v-if="authCheck">
+		<div class="card" v-if="user">
 			<div class="card-body">
 				<form @submit.prevent="review ? update () : create(); ">		
 					<div class="mb-3">
@@ -69,7 +69,7 @@ export default {
 	},
 
 	props: [
-		'authCheck',
+		'user',
 		'reviewableType',
 		'reviewableId',
 		'review',

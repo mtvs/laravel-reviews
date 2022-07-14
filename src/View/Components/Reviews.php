@@ -33,7 +33,7 @@ class Reviews extends Component
 			'reviewable-slug' => $this->reviewable->getRouteType(),
 			'reviewable-type' => get_class($this->reviewable),
 			'reviewable-id' => $this->reviewable->getKey(),
-			':auth-check' => auth()->check(),
+			':user' => auth()->user(),
 			':user-review' => $this->userReview(),
 		];
 

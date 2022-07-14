@@ -12,7 +12,7 @@
 				:reviewable-type="reviewableType"
 				:reviewable-id="reviewableId"
 				:review="oldReview"
-				:auth-check="authCheck"
+				:user="user"
 				@review-created="reviewCreated"
 				@review-updated="reviewUpdated"
 				@edit-cancelled="editCancelled"/>
@@ -39,7 +39,7 @@ export default {
 		'reviewableSlug',
 		'reviewableType',
 		'reviewableId',
-		'authCheck',
+		'user',
 		'userReview'
 	],
 

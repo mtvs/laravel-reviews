@@ -8,8 +8,8 @@
 			reviewable-slug="{{ $reviewable->getRouteType() }}"
 			reviewable-type="{{ get_class($reviewable) }}"
 			reviewable-id="{{ $reviewable->getKey() }}" 
-			:user="{{ auth()->user() }}"
-			:user-review="{{ $userReview() }}"
+			:user="{{ json_encode(auth()->user()) }}"
+			:user-review="{{ json_encode($userReview()) }}"
 		></reviews>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="card" v-if="user">
+		<div class="card">
 			<div class="card-body">
 				<form @submit.prevent="review ? update () : create(); ">		
 					<div class="mb-3">
@@ -46,10 +46,6 @@
 			    </form>
 			</div>
 		</div>	
-
-		<div class="alert alert-info" v-else>
-			Please login to be able to post a review.
-		</div>
 	</div>
 </template>
 
@@ -69,7 +65,6 @@ export default {
 	},
 
 	props: [
-		'user',
 		'reviewableType',
 		'reviewableId',
 		'review',

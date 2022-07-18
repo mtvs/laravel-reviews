@@ -2,9 +2,7 @@
     <span class="rating-stars">
        <span v-for="i in 5" 
             @click="$emit('score-selected', i)">
-           <i class="icon-star" v-if="i <= score"></i>
-
-            <i class="icon-star-empty" v-else></i>
+            <i :class="i <= score ? 'icon-star' : 'icon-star-empty'"></i>
        </span>
     </span>
 </template>

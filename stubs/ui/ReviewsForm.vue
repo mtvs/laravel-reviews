@@ -79,26 +79,25 @@ export default {
 			}).then(({data}) => {
 				this.$emit('review-created', data)
 			}).catch((error) => { 
-				if (error.response) {
-					if (error.response.status == 422) {
-						this.errors = error.response.data.errors
-					}
-				}
+				this.catchValidationError(error)
 			})
 		},
 
 		update() {
-			axios.put(`/reviews/${this.review.id}`, {
-				... this.form
-			}).then(({data}) => {
-				this.$emit('review-updated', data)
-			}).catch((error) => { 
-				if (error.response) {
-					if (error.response.status == 422) {
-						this.errors = error.response.data.errors
-					}
+			axios.put(`/reviews/${this.review.id}`, this.form)
+				.then(({data}) => {
+					this.$emit('review-updated', data)
+				}).catch((error) => { 
+					this.catchValidationError(error)
+				})
+		},
+
+		catchValidationError(error) {
+			if (error.response) {
+				if (error.response.status == 422) {
+					this.errors = error.response.data.errors
 				}
-			})
+			}
 		}
 	}
 }

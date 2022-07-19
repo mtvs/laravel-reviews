@@ -2,7 +2,7 @@
 	<div>
 		<div class="card">
 			<div class="card-body">
-				<form @submit.prevent="review ? update () : create(); ">		
+				<form @submit.prevent="review ? update() : create(); ">		
 					<div class="mb-3">
 			            <div :class="{'is-invalid': errors.rating}">
 			            	<rating-stars :score="form.rating"

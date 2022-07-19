@@ -18,7 +18,7 @@
 			            <input type="text" class="form-control"
 			            	:class="{'is-invalid': errors.title}" 
 			            	v-model="form.title"
-			            	placeholder="Enter the title."></input>
+			            	placeholder="Enter the title"></input>
 
 		            	<div class="invalid-feedback" v-if="errors.title">
 		            		{{ errors.title[0] }}
@@ -29,7 +29,7 @@
 			            <textarea class="form-control" 
 			            	:class="{'is-invalid': errors.body}" 
 			            	v-model="form.body"
-			            	placeholder="Write your review."></textarea>
+			            	placeholder="Write your review"></textarea>
 
 		            	<div class="invalid-feedback" v-if="errors.body">
 		            		{{ errors.body[0] }}

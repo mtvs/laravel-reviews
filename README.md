@@ -113,3 +113,10 @@ It also contains a call to the `<x-ratings>`.
 You can link the ratings component that you possibly use in the upper part of
 the page to the reviews component by wrapping the ratings in an
 `<a href="reviews">` referring the reviews component.
+
+### Ranking Based on The Ratings
+
+Reviewable models can be sorted based on their ratings when they're queried.
+To do so call the `highestRated()` on the query. It uses the Bayesian average 
+formula to calculate the score of each model and sort them from the highest to
+the lowest score.

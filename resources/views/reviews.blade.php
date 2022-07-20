@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" id="reviews">
 	<div class="card-body">
 		<x-ratings 
 			:average="$reviewable->ratings_avg"

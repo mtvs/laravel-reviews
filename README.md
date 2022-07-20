@@ -82,4 +82,34 @@ You also have to specify the reviewable models in the reviews config file.
 	\App\Models\Product::class,	
 ],
 ```
+## Usage
 
+### Ratings Component
+
+To display the average and the count of a reviewable model's ratings, you can
+call `<x-ratings>`. 
+
+```html
+
+<x-ratings :average="$product->ratings_avg" :count="$product->ratings_count"/>
+
+```
+
+Do not forget to load those values on the model by calling `loadRatings()` on
+it or eager load them when making the query by calling `withRatings()`.
+
+### Reviews Component
+
+To display the list of the reviews of a reviewable model and also the form to
+post them, you can call `<x-reviews>`.
+
+```html
+
+<x-reviews :reviewable="$product"/>
+
+```
+It also contains a call to the `<x-ratings>`.
+
+You can link the ratings component that you possibly use in the upper part of
+the page to the reviews component by wrapping the ratings in an
+`<a href="reviews">` referring the reviews component.

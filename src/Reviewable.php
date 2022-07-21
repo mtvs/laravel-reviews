@@ -37,11 +37,12 @@ trait Reviewable
 
 		$confidenceNumber = $this->bayesianConfidenceNumber();
 
-		$query->withAvg('reviews as itemAverage', 'rating')
-			->withCount('reviews as itemCount')
-			->orderByRaw('(IFNULL(itemAverage, 0) * itemCount + ? * ?) / (itemCount + ?) DESC', [
-				$totalAverage, $confidenceNumber, $confidenceNumber
-			]);
+		$query->withRatings()
+			->orderByRaw(
+				'(IFNULL(ratings_avg, 0) * ratings_count + ? * ?)'.
+				'/ (ratings_count + ?) DESC', 
+				[$totalAverage, $confidenceNumber, $confidenceNumber]
+			);
 	}
 
 	protected function bayesianConfidenceNumber()

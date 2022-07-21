@@ -25,10 +25,12 @@ trait Reviewable
 
 		$totalAverage = $reviewClass::query()
 			->where('reviewable_type', get_called_class())
+			->whereHas('reviewable')
 			->avg('rating');
 
 		$averageCount = $reviewClass::query()
 			->where('reviewable_type', get_called_class())
+			->whereHas('reviewable')
 			->count() / $this->count();
 
 		$query->withAvg('reviews as itemAverage', 'rating')

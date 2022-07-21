@@ -6,6 +6,15 @@ use Illuminate\Support\Str;
 
 trait Reviewable
 {
+	public static function bootReviewable()
+	{
+		static::deleted(function ($model) {
+			if (! $model->exists) {
+				$model->reviews()->forceDelete();
+			}
+		});
+	}
+
 	public function getRouteType()
 	{
 		$name = (new \ReflectionClass(get_called_class()))

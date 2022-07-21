@@ -89,4 +89,24 @@ class ReviewableTest extends TestCase
 		$this->assertEquals(4.5, $product->ratings_avg);
 		$this->assertEquals(2, $product->ratings_count);
 	}
+
+	/** @test */
+	public function it_deletes_its_reviews_when_is_deleted()
+	{
+		$product = ProductFactory::new()->create();
+
+		$product->reviews()->saveMany(
+			ReviewFactory::times(3)
+				->approved()
+				->make()
+		);
+
+		$product->delete();
+
+		$this->assertEquals(3, $product->reviews()->count());
+
+		$product->forceDelete();
+
+		$this->assertEquals(0, $product->reviews()->count());
+	}
 }

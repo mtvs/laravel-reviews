@@ -30,23 +30,26 @@ trait Reviewable
 
 	public function scopeHighestRated($query)
 	{
-		$reviewClass = config('reviews.model');
-
-		$totalAverage = $reviewClass::query()
+		$totalAverage = config('reviews.model')::query()
 			->where('reviewable_type', get_called_class())
 			->whereHas('reviewable')
 			->avg('rating');
 
-		$averageCount = $reviewClass::query()
-			->where('reviewable_type', get_called_class())
-			->whereHas('reviewable')
-			->count() / $this->count();
+		$confidenceNumber = $this->bayesianConfidenceNumber();
 
 		$query->withAvg('reviews as itemAverage', 'rating')
 			->withCount('reviews as itemCount')
 			->orderByRaw('(IFNULL(itemAverage, 0) * itemCount + ? * ?) / (itemCount + ?) DESC', [
-				$totalAverage, $averageCount, $averageCount
+				$totalAverage, $confidenceNumber, $confidenceNumber
 			]);
+	}
+
+	protected function bayesianConfidenceNumber()
+	{
+		return config('reviews.model')::query()
+			->where('reviewable_type', get_called_class())
+			->whereHas('reviewable')
+			->count() / $this->count();;
 	}
 
 	public function scopeWithRatings($query)

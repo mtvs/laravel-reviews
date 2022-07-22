@@ -11,14 +11,14 @@ class Review extends Model
 {
 	use HasFactory, ReviewConcerns;
 
-	const RATING_MAX = 5;
+	protected $with = ['user'];
 
 	protected $dates = [
 		'approval_at',
 	];
 
 	protected $fillable = [
-		'rating', 'title', 'body','recommend',
+		'rating', 'title', 'body'
 	];
 
 	public function approvalRequired()

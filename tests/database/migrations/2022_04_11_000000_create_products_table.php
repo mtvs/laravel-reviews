@@ -17,6 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
 
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

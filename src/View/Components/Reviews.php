@@ -13,14 +13,6 @@ class Reviews extends Component
 		$this->reviewable = $reviewable;
 	}
 
-	public function indexUrl()
-	{
-		return route('reviews.index',[ 
-			'type' => $this->reviewable->getRouteType(),
-			'key' => $this->reviewable->getRouteKey()
-		]);
-	}
-
 	public function userReview()
 	{
 		return auth()->guest() ? null :
@@ -29,33 +21,6 @@ class Reviews extends Component
 
 	public function render()
 	{
-		$props = [
-			'reviewable-slug' => $this->reviewable->getRouteType(),
-			'reviewable-type' => get_class($this->reviewable),
-			'reviewable-id' => $this->reviewable->getKey(),
-			':auth-check' => auth()->check(),
-			':user-review' => $this->userReview(),
-		];
-
-		$html = "<reviews {$this->encodeProps($props)}></reviews>";
-
-		return $html;
-	}
-
-	protected function encodeProps(array $props)
-	{
-		return implode(' ', array_map(
-			function ($key, $value) {
-				if (strpos($key, ':') === 0) {
-					$value = json_encode($value);
-				}
-
-				$value = e($value);
-
-				return "$key=\"$value\"";
-			},
-			array_keys($props),
-			array_values($props)
-		));
+		return view('reviews::reviews');
 	}
 }

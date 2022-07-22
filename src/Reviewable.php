@@ -6,6 +6,15 @@ use Illuminate\Support\Str;
 
 trait Reviewable
 {
+	public static function bootReviewable()
+	{
+		static::deleted(function ($model) {
+			if (! $model->exists) {
+				$model->reviews()->forceDelete();
+			}
+		});
+	}
+
 	public function getRouteType()
 	{
 		$name = (new \ReflectionClass(get_called_class()))
@@ -16,7 +25,7 @@ trait Reviewable
 
 	public function reviews()
 	{
-		return $this->morphMany(app('review_class'), 'reviewable');
+		return $this->morphMany(config('reviews.model'), 'reviewable');
 	}
 
 	public function ratingRatios()
@@ -32,7 +41,7 @@ trait Reviewable
 				$ratios[$group->rating] = round($group->count / $total * 100);
 			});
 
-		foreach(range(1, app('review_class')::RATING_MAX) as $rating) {
+		foreach(range(1, config('reviews.rating_max')) as $rating) {
 			if (! array_key_exists($rating, $ratios)) {
 				$ratios[$rating] = 0;
 			}
@@ -50,23 +59,39 @@ trait Reviewable
 
 	public function scopeHighestRated($query)
 	{
-		$reviewClass = app('review_class');
+		$totalAverage = config('reviews.model')::query()
+			->where('reviewable_type', get_called_class())
+			->whereHas('reviewable')
+			->avg('rating');
 
-		$totalAverage = $reviewClass::where('reviewable_type', get_called_class())
-		->avg('rating');
-		$averageCount = $reviewClass::where('reviewable_type', get_called_class())
-		->count() / $this->count();
+		$confidenceNumber = $this->bayesianConfidenceNumber();
 
-		$query->withAvg('reviews as itemAverage', 'rating')
-			->withCount('reviews as itemCount')
-			->orderByRaw('(IFNULL(itemAverage, 0) * itemCount + ? * ?) / (itemCount + ?) DESC', [
-				$totalAverage, $averageCount, $averageCount
-			]);
+		$query->withRatings()
+			->orderByRaw(
+				'(IFNULL(ratings_avg, 0) * ratings_count + ? * ?)'.
+				'/ (ratings_count + ?) DESC', 
+				[$totalAverage, $confidenceNumber, $confidenceNumber]
+			);
+	}
+
+	protected function bayesianConfidenceNumber()
+	{
+		return config('reviews.model')::query()
+			->where('reviewable_type', get_called_class())
+			->whereHas('reviewable')
+			->count() / $this->count();;
 	}
 
 	public function scopeWithRatings($query)
 	{
 		$query->withAvg('reviews as ratings_avg', 'rating')
 			->withCount('reviews as ratings_count');
+	}
+
+	public function loadRatings()
+	{
+		$this->ratings_avg = $this->reviews()->avg('rating');
+
+		$this->ratings_count = $this->reviews()->count();
 	}
 }

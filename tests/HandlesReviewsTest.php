@@ -28,7 +28,7 @@ class HandlesReviewsTest extends TestCase
 			protected function validator(array $data)
 			{
 				return Validator::make($data, [
-					'rating' => ['required', 'numeric', 'min:1', 'max:'.Review::RATING_MAX],
+					'rating' => ['required', 'numeric', 'min:1', 'max:'.config('reviews.rating_max')],
 					'title' => ['required', 'string', 'max:255'],
 					'body' => ['required', 'string'],
 				]);
@@ -179,7 +179,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -217,7 +217,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -250,7 +250,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -274,7 +274,6 @@ class HandlesReviewsTest extends TestCase
 		$review = $user->reviews()->save(
 			ReviewFactory::new()->approved()->make([
 				'rating' => 5,
-				'recommend' => true,
 			])
 		);
 
@@ -286,7 +285,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", "PUT", $data, [], [], [
+		$request = Request::create("/reviews/{$id}", "PUT", $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -306,10 +305,9 @@ class HandlesReviewsTest extends TestCase
 
 		$data = array_merge($review->getAttributes(), [
 			'rating' => 1,
-			'recommend' => false,
 		]);
 
-		$request = Request::create("/review/{$id}", "PUT", $data, [], [], [
+		$request = Request::create("/reviews/{$id}", "PUT", $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -320,7 +318,6 @@ class HandlesReviewsTest extends TestCase
 		$this->assertDatabaseHas('reviews', [
 			'id' => $review->id,
 			'rating' => $data['rating'],
-			'recommend' => $data['recommend'],
 			'approval_status' => ApprovalStatuses::APPROVED,
 		]);
 	}
@@ -340,7 +337,7 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", 'PUT', $data, [], [], [
+		$request = Request::create("/reviews/{$id}", 'PUT', $data, [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
@@ -369,12 +366,12 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", 'DELETE', [], [], [], [
+		$request = Request::create("/reviews/{$id}", 'DELETE', [], [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
-			return $this->controller->delete($id, $request);
+			return $this->controller->destroy($id, $request);
 		});
 
 		$this->assertDatabaseMissing('reviews', [
@@ -397,12 +394,12 @@ class HandlesReviewsTest extends TestCase
 
 		$id = $review->id;
 
-		$request = Request::create("/review/{$id}", 'DELETE', [], [], [], [
+		$request = Request::create("/reviews/{$id}", 'DELETE', [], [], [], [
 			'HTTP_ACCEPT' => 'application/json',
 		]);
 
 		$response = $this->handleRequestUsing($request, function ($request) use ($id) {
-			return $this->controller->delete($id, $request);
+			return $this->controller->destroy($id, $request);
 		}); 
 
 		$this->assertDatabaseHas('reviews', [

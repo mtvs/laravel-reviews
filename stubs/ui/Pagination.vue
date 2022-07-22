@@ -1,5 +1,5 @@
 <template>
-	<nav v-if="data.last_page > 1" class="d-flex justify-content-between mt-2">
+	<nav v-if="data.last_page > 1" class="d-flex justify-content-between">
 		<ul class="pagination">
 			<li class="page-item" :class="{disabled: !hasPrev}">
 				<a class="page-link" href="#" @click="getPrev">

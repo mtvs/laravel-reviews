@@ -8,19 +8,22 @@
 		</div>
 
 		<div>
-			<reviews-form v-if="! currentReview"
+			<reviews-current v-if="currentReview"
+				:review="currentReview"
+				@edit-requested="editRequested"
+				@review-deleted="reviewDeleted"/>
+
+			<reviews-form v-else-if="user" 
 				:reviewable-type="reviewableType"
 				:reviewable-id="reviewableId"
 				:review="oldReview"
-				:auth-check="authCheck"
 				@review-created="reviewCreated"
 				@review-updated="reviewUpdated"
 				@edit-cancelled="editCancelled"/>
 
-			<reviews-current v-else 
-				:review="currentReview"
-				@edit-requested="editRequested"
-				@review-deleted="reviewDeleted"/>
+			<div class="alert alert-info" v-else>
+				Please login to be able to post a review.
+			</div>
 		</div>
 	</div>
 </template>
@@ -39,7 +42,7 @@ export default {
 		'reviewableSlug',
 		'reviewableType',
 		'reviewableId',
-		'authCheck',
+		'user',
 		'userReview'
 	],
 

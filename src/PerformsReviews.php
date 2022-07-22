@@ -6,9 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 trait PerformsReviews 
 {
+	public static function bootPerformsReviews()
+	{
+		static::deleted(function ($model) {
+			if (! $model->exists) {
+				$model->reviews()->forceDelete();
+			}
+		});
+	}
+
 	public function reviews()
 	{
-		return $this->hasMany(app('review_class'));
+		return $this->hasMany(config('reviews.model'));
 	}
 
 	public function hasAlreadyReviewed(Model $reviewable): bool

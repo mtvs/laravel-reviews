@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="list-group" v-if="reviews.length">
+		<div class="list-group mb-2" v-if="reviews.length">
 			<div class="list-group-item" v-for="review in reviews">
 				<reviews-single :review="review" />
 			</div>

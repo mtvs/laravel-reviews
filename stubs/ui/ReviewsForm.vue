@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="card" v-if="authCheck">
+		<div class="card">
 			<div class="card-body">
-				<form @submit.prevent="review ? update () : create(); ">		
+				<form @submit.prevent="review ? update() : create(); ">		
 					<div class="mb-3">
 			            <div :class="{'is-invalid': errors.rating}">
 			            	<rating-stars :score="form.rating"
@@ -18,7 +18,7 @@
 			            <input type="text" class="form-control"
 			            	:class="{'is-invalid': errors.title}" 
 			            	v-model="form.title"
-			            	placeholder="Enter the title."></input>
+			            	placeholder="Enter the title"></input>
 
 		            	<div class="invalid-feedback" v-if="errors.title">
 		            		{{ errors.title[0] }}
@@ -29,7 +29,7 @@
 			            <textarea class="form-control" 
 			            	:class="{'is-invalid': errors.body}" 
 			            	v-model="form.body"
-			            	placeholder="Write your review."></textarea>
+			            	placeholder="Write your review"></textarea>
 
 		            	<div class="invalid-feedback" v-if="errors.body">
 		            		{{ errors.body[0] }}
@@ -46,10 +46,6 @@
 			    </form>
 			</div>
 		</div>	
-
-		<div class="alert alert-info" v-else>
-			Please login to be able to post a review.
-		</div>
 	</div>
 </template>
 
@@ -58,7 +54,6 @@ export default {
 	data() {
 		var form = {
 			rating: this.review ? this.review.rating : null,
-			recommend: true,
 			title: this.review ? this.review.title : null,
 			body: this.review ? this.review.body : null
 		}
@@ -70,7 +65,6 @@ export default {
 	},
 
 	props: [
-		'authCheck',
 		'reviewableType',
 		'reviewableId',
 		'review',
@@ -85,26 +79,25 @@ export default {
 			}).then(({data}) => {
 				this.$emit('review-created', data)
 			}).catch((error) => { 
-				if (error.response) {
-					if (error.response.status == 422) {
-						this.errors = error.response.data.errors
-					}
-				}
+				this.catchValidationError(error)
 			})
 		},
 
 		update() {
-			axios.put(`/review/${this.review.id}`, {
-				... this.form
-			}).then(({data}) => {
-				this.$emit('review-updated', data)
-			}).catch((error) => { 
-				if (error.response) {
-					if (error.response.status == 422) {
-						this.errors = error.response.data.errors
-					}
+			axios.put(`/reviews/${this.review.id}`, this.form)
+				.then(({data}) => {
+					this.$emit('review-updated', data)
+				}).catch((error) => { 
+					this.catchValidationError(error)
+				})
+		},
+
+		catchValidationError(error) {
+			if (error.response) {
+				if (error.response.status == 422) {
+					this.errors = error.response.data.errors
 				}
-			})
+			}
 		}
 	}
 }

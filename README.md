@@ -1,80 +1,130 @@
 # Laravel Reviews
 
-This package provides reviews and ratings for the Laravel's Eloquent models.
+![laravel-reviews](https://user-images.githubusercontent.com/8286154/180371891-207cdf5a-ce5b-42d6-b2e4-7811b2b6eed1.gif)
 
-It enables the users to rate and review the reviewable models. Then admin can
-choose to approve the reviews to let them be shown.
+Ratings and reviews for the Laravel's Eloquent models.
 
-It adds the rating values, `rating_average` and `rating_count`, to a model from
-its reviews.
+Users will be able to rate and review the reviewable models. Then these reviews
+can be approved and be shown.
 
-It provides the abilty to sort the models to which reviews belong based on their
-rating from the reviwes using the Bayesian algorithm.
+You will be able to load the ratings average and count on a reviewable model 
+and display them.
 
-## Components
+It will provide the ability to sort the reviewables based on their
+ratings average using the Bayesian algorithm.
 
-### The Review Schema
+## Installation And Setup
 
-It specifies the DB table structure.
+```sh
 
-* id
-* rating
-* title
-* body
-* recommend
-* user_id
-* reviewable_type
-* reviewable_id
+composer require 
 
+```
+Then publish the files that are supposed to be in your codebase in order to be
+customizable by you. They're the review model, its database migration, its 
+database factory, the HTTP controller and the config file. 
 
-### The Review Model
+```sh
 
-It defines the relations to the `User` and `Reviewable` models.
+php artisan vendor:publish
 
-* reviewable()
-* user()
+```
+Next in your routes file, call the following macro and the router to register 
+the default routes. You can use `artisan route:list` to see the routes.
 
-### The Reviewable Trait
+```php
 
-It defines the relation to the `Review` model. And it loads the rating
-aggregations on the model. Also it provides the ability to sort the models
-based on their rating by defining a query scope to do that.
+Route::reviews()
 
-* reviews()
-* withRating()
-* scopeHigestRated()
+```
+Then, if you want to use the UI components, run the following command to 
+install them. They're written using Vue and Bootstrap. Also a stylesheet and a
+pack of font icons are installed in the public directory. 
 
-### The `PerformsReviews` Trait
+```sh
 
-It defines the necessary methods for the `User` model that perform the reviews.
+php artisan reviews:ui
 
-* reviews()
-* hasReviewed($reviewable): bool
+```
+Now let's setup the models. There are some traits that are meant to be imported
+in the review model, the user model and also the model(s) that are going to be
+reviewed. The review model's trait has already been imported in it when it was
+installed. But the other traits need to be installed manually.
 
+```php
 
-### The Reviews View
+namespace App\Models;
 
-It lists the reviews of a specefied model. It also provides the UI to the user
-to review a product.
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Reviews\PerformsReviews;
 
-### The User's Reviews Controller
+class User extends Authenticatable
+{
+	use PerformsReviews;
+}
 
-It defines the method to handle the CRUD operations to
-enable a user to review a model.
+```
+```php
 
-* index()
-* create()
-* update()
-* delete()
+namespace App\Models;
 
-### The Admin's Reviews View
+use Illuminate\Database\Eloquent\Model;
+use Reviews\Reviewable;
 
-It lists the reviews for the adminstration. It provides the UI to approve the
-reviews.
+class Product extends Model
+{
+    use Reviewable;
+}
 
-### The Admin's Reviews Controller
+```
+You also have to specify the reviewable models in the reviews config file.
 
-It handles the listing and approval of the reviews for the admin.
+```php
+'reviewables' => [
+	\App\Models\Product::class,	
+],
+```
+## Usage
 
-* index()
-* setApprovalStatus()
+### The Ratings Component
+
+To display the average and the count of a reviewable model's ratings, you can
+call `<x-ratings>`. 
+
+```html
+
+<x-ratings :average="$product->ratings_avg" :count="$product->ratings_count"/>
+
+```
+
+Do not forget to load those values on the model by calling `loadRatings()` on
+it or eager load them when making the query by calling `withRatings()`.
+
+### The Reviews Component
+
+To display the list of the reviews of a reviewable model and also the form to
+post them, you can call `<x-reviews>`.
+
+```html
+
+<x-reviews :reviewable="$product"/>
+
+```
+It also contains a call to the `<x-ratings>`.
+
+You can link the ratings component that you possibly use in the upper part of
+the page to the reviews component by wrapping the ratings in an
+`<a href="reviews">` referring the reviews component.
+
+### Ranking Based on The Ratings
+
+Reviewable models can be sorted based on their ratings when they're queried.
+To do so call the `highestRated()` on the query. It uses the Bayesian average 
+formula to calculate the score of each model and sort them from the highest to
+the lowest score.
+
+### The Approval of Reviews
+
+The review model uses `Approvable` trait from 
+[mtvs/eloquent-approval](https://github.com/mtvs/eloquent-approval) to enable 
+to manage which reviews are allowed to be displayed. 

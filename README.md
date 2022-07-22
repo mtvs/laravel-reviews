@@ -84,7 +84,7 @@ You also have to specify the reviewable models in the reviews config file.
 ```
 ## Usage
 
-### Ratings Component
+### The Ratings Component
 
 To display the average and the count of a reviewable model's ratings, you can
 call `<x-ratings>`. 
@@ -98,7 +98,7 @@ call `<x-ratings>`.
 Do not forget to load those values on the model by calling `loadRatings()` on
 it or eager load them when making the query by calling `withRatings()`.
 
-### Reviews Component
+### The Reviews Component
 
 To display the list of the reviews of a reviewable model and also the form to
 post them, you can call `<x-reviews>`.
@@ -120,3 +120,9 @@ Reviewable models can be sorted based on their ratings when they're queried.
 To do so call the `highestRated()` on the query. It uses the Bayesian average 
 formula to calculate the score of each model and sort them from the highest to
 the lowest score.
+
+### The Approval of Reviews
+
+The review model uses `Approvable` trait from 
+[mtvs/eloquent-approval](https://github.com/mtvs/eloquent-approval) to enable 
+to manage which reviews are allowed to be displayed. 

@@ -1,3 +1,5 @@
+![Build Status](https://github.com/mtvs/laravel-reviews/actions/workflows/build.yml/badge.svg)
+
 # Laravel Reviews
 
 ### Ratings and reviews for the Laravel's Eloquent models

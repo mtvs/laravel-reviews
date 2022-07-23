@@ -1,6 +1,6 @@
 # Laravel Reviews
 
-![laravel-reviews](https://user-images.githubusercontent.com/8286154/180371891-207cdf5a-ce5b-42d6-b2e4-7811b2b6eed1.gif)
+![laravel-reviews](https://user-images.githubusercontent.com/8286154/180592946-5d5d99ef-9e06-489a-9de9-b7a5184a6637.gif)
 
 Ratings and reviews for the Laravel's Eloquent models.
 

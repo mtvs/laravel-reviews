@@ -14,13 +14,13 @@ You will be able to load the ratings average and count on a reviewable model
 and display them.
 
 It will provide the ability to sort the reviewables based on their
-ratings average using the Bayesian algorithm.
+ratings average using the Bayesian formula.
 
 ## Installation And Setup
 
 ```sh
 
-composer require 
+composer require mtvs/laravel-reviews
 
 ```
 Then publish the files that are supposed to be in your codebase in order to be

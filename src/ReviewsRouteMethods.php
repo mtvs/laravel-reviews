@@ -1,6 +1,6 @@
 <?php
 
-namespace Reviews;
+namespace Mtvs\Reviews;
 
 class ReviewsRouteMethods
 {

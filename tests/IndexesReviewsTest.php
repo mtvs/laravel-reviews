@@ -1,11 +1,11 @@
 <?php
 
-namespace Reviews\Tests;
+namespace Mtvs\Reviews\Tests;
 
 use Illuminate\Http\Request;
-use Reviews\IndexesReviews;
-use Reviews\Tests\Database\Factories\ProductFactory;
-use Reviews\Tests\Database\Factories\ReviewFactory;
+use Mtvs\Reviews\IndexesReviews;
+use Mtvs\Reviews\Tests\Database\Factories\ProductFactory;
+use Mtvs\Reviews\Tests\Database\Factories\ReviewFactory;
 
 class IndexesReviewsTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Reviews\View\Components;
+namespace Mtvs\Reviews\View\Components;
 
 use Illuminate\View\Component;
 

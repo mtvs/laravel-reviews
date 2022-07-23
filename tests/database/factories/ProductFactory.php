@@ -1,9 +1,9 @@
 <?php
 
-namespace Reviews\Tests\Database\Factories;
+namespace Mtvs\Reviews\Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Reviews\Tests\Models\Product;
+use Mtvs\Reviews\Tests\Models\Product;
 
 class ProductFactory extends Factory
 {

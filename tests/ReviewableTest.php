@@ -1,10 +1,10 @@
 <?php
 
-namespace Reviews\Tests;
+namespace Mtvs\Reviews\Tests;
 
-use Reviews\Tests\Database\Factories\ProductFactory;
-use Reviews\Tests\Database\Factories\ReviewFactory;
-use Reviews\Tests\Models\Product;
+use Mtvs\Reviews\Tests\Database\Factories\ProductFactory;
+use Mtvs\Reviews\Tests\Database\Factories\ReviewFactory;
+use Mtvs\Reviews\Tests\Models\Product;
 
 class ReviewableTest extends TestCase
 {

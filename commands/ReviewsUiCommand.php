@@ -1,6 +1,6 @@
 <?php
 
-namespace Reviews\Commands;
+namespace Mtvs\Reviews\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

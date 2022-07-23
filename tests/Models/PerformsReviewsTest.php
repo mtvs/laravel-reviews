@@ -1,9 +1,9 @@
 <?php
 
-namespace Reviews\Tests;
+namespace Mtvs\Reviews\Tests;
 
-use Reviews\Tests\Database\Factories\ReviewFactory;
-use Reviews\Tests\Database\Factories\UserFactory;
+use Mtvs\Reviews\Tests\Database\Factories\ReviewFactory;
+use Mtvs\Reviews\Tests\Database\Factories\UserFactory;
 
 class PerformsReviewsTest extends TestCase
 {

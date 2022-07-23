@@ -1,11 +1,11 @@
 <?php
 
-namespace Reviews\Tests\Models;
+namespace Mtvs\Reviews\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Reviews\ReviewConcerns;
-use Reviews\Tests\Database\Factories\ReviewFactory;
+use Mtvs\Reviews\ReviewConcerns;
+use Mtvs\Reviews\Tests\Database\Factories\ReviewFactory;
 
 class Review extends Model
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Reviews;
+namespace Mtvs\Reviews;
 
 use Illuminate\Database\Eloquent\Model;
 

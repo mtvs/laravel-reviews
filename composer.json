@@ -11,14 +11,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "Reviews\\": "src/",
-            "Reviews\\Commands\\": "commands/"
+            "Mtvs\\Reviews\\": "src/",
+            "Mtvs\\Reviews\\Commands\\": "commands/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Reviews\\Tests\\": "tests/",
-            "Reviews\\Tests\\Database\\Factories\\": "tests/database/factories/"
+            "Mtvs\\Reviews\\Tests\\": "tests/",
+            "Mtvs\\Reviews\\Tests\\Database\\Factories\\": "tests/database/factories/"
         }
     },
     "require": {

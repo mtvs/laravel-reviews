@@ -1,11 +1,11 @@
 <?php
 
-namespace Reviews\Tests\Models;
+namespace Mtvs\Reviews\Tests\Models;
 
 use Illuminate\Foundation\Auth\User as Base;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Reviews\PerformsReviews;
-use Reviews\Tests\Database\Factories\UserFactory;
+use Mtvs\Reviews\PerformsReviews;
+use Mtvs\Reviews\Tests\Database\Factories\UserFactory;
 
 class User extends Base 
 {

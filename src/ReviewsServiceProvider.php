@@ -1,13 +1,13 @@
 <?php
 
-namespace Reviews;
+namespace Mtvs\Reviews;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
-use Reviews\Commands\ReviewsUiCommand;
-use Reviews\View\Components\Reviews;
-use Reviews\View\Components\Ratings;
+use Mtvs\Reviews\Commands\ReviewsUiCommand;
+use Mtvs\Reviews\View\Components\Reviews;
+use Mtvs\Reviews\View\Components\Ratings;
 
 class ReviewsServiceProvider extends ServiceProvider
 {

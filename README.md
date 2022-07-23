@@ -59,7 +59,7 @@ installed. But the other traits need to be installed manually.
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Reviews\PerformsReviews;
+use Mtvs\Reviews\PerformsReviews;
 
 class User extends Authenticatable
 {
@@ -72,7 +72,7 @@ class User extends Authenticatable
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Reviews\Reviewable;
+use Mtvs\Reviews\Reviewable;
 
 class Product extends Model
 {

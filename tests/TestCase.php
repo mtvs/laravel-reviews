@@ -1,6 +1,6 @@
 <?php
 
-namespace Reviews\Tests;
+namespace Mtvs\Reviews\Tests;
 
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
@@ -8,9 +8,9 @@ use Illuminate\Testing\TestResponse;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Mtvs\EloquentApproval\ApprovalServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Reviews\ReviewsServiceProvider;
-use Reviews\Tests\Models\Review;
-use Reviews\Tests\Models\User;
+use Mtvs\Reviews\ReviewsServiceProvider;
+use Mtvs\Reviews\Tests\Models\Review;
+use Mtvs\Reviews\Tests\Models\User;
 
 abstract class TestCase extends Orchestra
 {
@@ -24,7 +24,7 @@ abstract class TestCase extends Orchestra
 		$this->app['config']->set('reviews.model', Review::class);
 		$this->app['config']->set('auth.providers.users.model', User::class);
 		$this->app['config']->set('reviews.reviewables', [
-			'Reviews\Tests\Models\Product',
+			'Mtvs\Reviews\Tests\Models\Product',
 		]);
 
 		$this->loadLaravelMigrations();

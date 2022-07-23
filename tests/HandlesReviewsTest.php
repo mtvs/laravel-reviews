@@ -1,18 +1,18 @@
 <?php
 
-namespace Reviews\Tests;
+namespace Mtvs\Reviews\Tests;
 
 use Illuminate\Http\Request;
-use Reviews\HandlesReviews;
-use Reviews\Tests\Database\Factories\ReviewFactory;
-use Reviews\Tests\Database\Factories\ProductFactory;
-use Reviews\Tests\Database\Factories\UserFactory;
+use Mtvs\Reviews\HandlesReviews;
+use Mtvs\Reviews\Tests\Database\Factories\ReviewFactory;
+use Mtvs\Reviews\Tests\Database\Factories\ProductFactory;
+use Mtvs\Reviews\Tests\Database\Factories\UserFactory;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Mtvs\EloquentApproval\ApprovalStatuses;
-use Reviews\Tests\Models\Review;
+use Mtvs\Reviews\Tests\Models\Review;
 
 class HandlesReviewsTest extends TestCase
 {

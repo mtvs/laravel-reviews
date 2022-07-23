@@ -1,12 +1,12 @@
 <?php
 
-namespace Reviews\Tests\Database\Factories;
+namespace Mtvs\Reviews\Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Mtvs\EloquentApproval\ApprovalFactoryStates;
-use Reviews\Tests\Database\Factories\UserFactory;
-use Reviews\Tests\Database\Factories\ProductFactory;
-use Reviews\Tests\Models\Review;
+use Mtvs\Reviews\Tests\Database\Factories\UserFactory;
+use Mtvs\Reviews\Tests\Database\Factories\ProductFactory;
+use Mtvs\Reviews\Tests\Models\Review;
 
 class ReviewFactory extends Factory
 {

@@ -1,8 +1,9 @@
 # Laravel Reviews
 
+### Ratings and reviews for the Laravel's Eloquent models
+
 ![laravel-reviews](https://user-images.githubusercontent.com/8286154/180592946-5d5d99ef-9e06-489a-9de9-b7a5184a6637.gif)
 
-Ratings and reviews for the Laravel's Eloquent models.
 
 Users will be able to rate and review the reviewable models. Then these reviews
 can be approved and be shown.

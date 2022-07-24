@@ -35,7 +35,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Reviews\\ReviewsServiceProvider"
+                "Mtvs\\Reviews\\ReviewsServiceProvider"
             ]
         }
     },

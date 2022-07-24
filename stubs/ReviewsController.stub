@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
-use Reviews\HandlesReviews;
-use Reviews\IndexesReviews;
+use Mtvs\Reviews\HandlesReviews;
+use Mtvs\Reviews\IndexesReviews;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 

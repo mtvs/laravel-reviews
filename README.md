@@ -32,7 +32,7 @@ database factory, the HTTP controller and the config file.
 php artisan vendor:publish
 
 ```
-Next in your routes file, call the following macro and the router to register 
+Next in your routes file, call the following macro on the router to register 
 the default routes. You can use `artisan route:list` to see the routes.
 
 ```php

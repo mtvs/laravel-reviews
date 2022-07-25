@@ -5,7 +5,7 @@
 				<form @submit.prevent="review ? update() : create(); ">		
 					<div class="mb-3">
 			            <div :class="{'is-invalid': errors.rating}">
-			            	<rating-stars :score="form.rating"
+			            	<reviews-stars :score="form.rating"
 			            	@score-selected="(score) => form.rating = score"/>
 			            </div>
 

@@ -3,7 +3,7 @@
 		<div class="mb-3" v-if="paginator">
 			<reviews-list :reviews="paginator.data"></reviews-list>
 
-			<pagination :data="paginator"
+			<reviews-pagination :data="paginator"
 				@page-requested="getPage" />
 		</div>
 

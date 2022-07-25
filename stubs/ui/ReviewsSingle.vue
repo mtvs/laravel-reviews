@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="mb-1 d-flex justify-content-between">
-			<rating-stars :score="review.rating" />
+			<reviews-stars :score="review.rating" />
 
 			<div class="text-muted">
 				<span>{{ createdAt }}</span> |

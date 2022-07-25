@@ -41,14 +41,33 @@ Route::reviews()
 
 ```
 Then, if you want to use the UI components, run the following command to 
-install them. They're written using Vue and Bootstrap. Also a stylesheet and a
-pack of font icons are installed in the public directory. 
+install them. The components are written using Vue and Bootstrap.
+
+The command also installs a stylesheet and a pack of font icons in the public
+directory to be used by the components. Don't forget to include the stylesheet
+in your views layout file.
 
 ```sh
 
 php artisan reviews:ui
 
 ```
+
+If you haven't enabled the auto registration in the `app.js` file, you need to 
+register the components manually.
+
+```js
+
+Vue.component('reviews', require('./components/reviews/Reviews.vue').default);
+Vue.component('reviews-current', require('./components/reviews/ReviewsCurrent.vue').default);
+Vue.component('reviews-form', require('./components/reviews/ReviewsForm.vue').default);
+Vue.component('reviews-list', require('./components/reviews/ReviewsList.vue').default);
+Vue.component('reviews-pagination', require('./components/reviews/ReviewsPagination.vue').default);
+Vue.component('reviews-single', require('./components/reviews/ReviewsSingle.vue').default);
+Vue.component('reviews-stars', require('./components/reviews/ReviewsStars.vue').default);
+
+````
+
 Now let's setup the models. There are some traits that are meant to be imported
 in the review model, the user model and also the model(s) that are going to be
 reviewed. The review model's trait has already been imported in it when it was

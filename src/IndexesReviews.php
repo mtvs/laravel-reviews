@@ -4,17 +4,19 @@ namespace Mtvs\Reviews;
 
 trait IndexesReviews
 {
-	public function index($routetype, $key)
+	public function index($reviewable_set, $reviewable_key)
 	{
-		$reviewable = $this->findReviewableOrFail($routetype, $key);
+		$reviewable = $this->findReviewableOrFail(
+			$reviewable_set, $reviewable_key
+		);
 
 		return $reviewable->reviews()->paginate();
 	}
 
-	protected function findReviewableOrFail($routetype, $key)
+	protected function findReviewableOrFail($set, $key)
 	{
 		foreach (config('reviews.reviewables') as $reviewable) {
-			if ((new $reviewable)->getRouteType() == $routetype) {
+			if ($reviewable::getSetName() == $set) {
 				$class = $reviewable;
 				break;
 			}

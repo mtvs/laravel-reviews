@@ -22,12 +22,12 @@ class IndexesReviewsTest extends TestCase
 			ReviewFactory::new()->rejected()->make(),
 		]);
 
-		$request = Request::create("/product/{$product->id}/reviews");
+		$request = Request::create("/products/{$product->id}/reviews");
 
 		$id = $product->id;
 
 		$response = $this->handleRequestUsing($request, function () use ($id) {
-			return $this->index('product', $id);
+			return $this->index('products', $id);
 		});
 
 		$response->assertSee($reviews[0]->title);

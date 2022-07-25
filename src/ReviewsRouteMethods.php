@@ -13,8 +13,10 @@ class ReviewsRouteMethods
 
 			$this->group(['namespace' => $namespace], function () use($options) {
 				if ($options['index'] ?? true) {
-					$this->get('/{type}/{key}/reviews', 'ReviewsController@index')
-						->name('reviews.index');
+					$this->get(
+						'/{reviewable_set}/{reviewable_key}/reviews',
+					 	'ReviewsController@index'
+					)->name('reviews.index');
 				}
 
 				if ($options['store'] ?? true) {

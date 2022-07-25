@@ -39,15 +39,15 @@ export default {
 	},
 
 	props: [
-		'reviewableSlug',
 		'reviewableType',
+		'reviewableSet',
 		'reviewableId',
 		'user',
 		'userReview'
 	],
 
 	created() {
-		this.getPage(`/${this.reviewableSlug}/${this.reviewableId}/reviews`)
+		this.getPage(`/${this.reviewableSet}/${this.reviewableId}/reviews`)
 	},
 
 	methods: {

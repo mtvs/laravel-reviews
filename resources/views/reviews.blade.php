@@ -6,7 +6,7 @@
 			:ratios="$reviewable->ratingRatios()"/>
 
 		<reviews 
-			reviewable-slug="{{ $reviewable->getRouteType() }}"
+			reviewable-set="{{ $reviewable::getSetName() }}"
 			reviewable-type="{{ get_class($reviewable) }}"
 			reviewable-id="{{ $reviewable->getKey() }}" 
 			:user="{{ json_encode(auth()->user()) }}"

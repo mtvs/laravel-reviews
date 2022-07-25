@@ -15,12 +15,12 @@ trait Reviewable
 		});
 	}
 
-	public function getRouteType()
+	public static function getSetName()
 	{
 		$name = (new \ReflectionClass(get_called_class()))
 			->getShortName();
 
-		return Str::snake($name, '-');
+		return Str::plural(Str::snake($name, '-'));
 	}
 
 	public function reviews()

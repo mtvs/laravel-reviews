@@ -42,9 +42,7 @@ trait HandlesReviews
 
 	public function update($key, Request $request)
 	{
-		$user = auth()->user();
-
-		$review = $this->findReviewBelongsToUserOrFail($key, $user);
+		$review = $this->findReviewOrFail($key);
 
 		$this->validator($request->all())->validate();
 
@@ -57,15 +55,15 @@ trait HandlesReviews
 
 	public function destroy($key, Request $request)
 	{
-		$user = auth()->user();
-
-		$review = $this->findReviewBelongsToUserOrFail($key, $user);
+		$review = $this->findReviewOrFail($key);
 
 		$review->delete();
 	}
 
-	protected function findReviewBelongsToUserOrFail($key, $user)
+	protected function findReviewOrFail($key)
 	{
+		$user = auth()->user();
+
 		return $user->reviews()->getRelated()
 			->resolveRouteBindingQuery($user->reviews(), $key)
 			->anyApprovalStatus()->firstOrFail();

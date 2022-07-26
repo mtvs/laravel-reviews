@@ -2,7 +2,6 @@
 
 namespace Mtvs\Reviews;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 trait HandlesReviews

@@ -24,7 +24,7 @@ trait HandlesReviews
 
 		$user = auth()->user();
 
-		// Reject multiple reviews from a signle user
+		// Reject multiple reviews from a single user
 		if ($user->hasAlreadyReviewed($reviewable))
 		{
 			return abort(403, 'It has already been reviewed by the user.');

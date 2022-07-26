@@ -1,8 +1,10 @@
 <?php
 
 return [
+	// The reviews model
 	'model' => \App\Models\Review::class,
 
+	// The models that can be reviewed
 	'reviewables' => [
 		// \App\Models\Product::class,
 	],

@@ -59,7 +59,7 @@ trait Reviewable
 
 	public function scopeHighestRated($query)
 	{
-		$totalAverage = config('reviews.model')::query()
+		$totalAverage = $this->reviews()->getRelated()
 			->where('reviewable_type', get_called_class())
 			->whereHas('reviewable')
 			->avg('rating');
@@ -76,7 +76,7 @@ trait Reviewable
 
 	protected function bayesianConfidenceNumber()
 	{
-		return config('reviews.model')::query()
+		return $this->reviews()->getRelated()
 			->where('reviewable_type', get_called_class())
 			->whereHas('reviewable')
 			->count() / $this->count();;

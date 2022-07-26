@@ -2,10 +2,16 @@
 
 namespace Mtvs\Reviews;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
 trait Reviewable
 {
+	/**
+	 * Boot the Reviewable trait.
+	 * 
+	 * @return void
+	 **/ 
 	public static function bootReviewable()
 	{
 		static::deleted(function ($model) {
@@ -15,6 +21,14 @@ trait Reviewable
 		});
 	}
 
+	/**
+	 * Get the name of the reviewable set.
+	 * 
+	 * Each reviewable model is considered a set and the set's name is the
+	 * plural form of the model name.
+	 * 
+	 * @return string
+	 **/
 	public static function getSetName()
 	{
 		$name = (new \ReflectionClass(get_called_class()))
@@ -23,11 +37,21 @@ trait Reviewable
 		return Str::plural(Str::snake($name, '-'));
 	}
 
+	/**
+	 * Return the relation to the reviews model
+	 * 
+	 * @return MorphMany
+	 **/
 	public function reviews()
 	{
 		return $this->morphMany(config('reviews.model'), 'reviewable');
 	}
 
+	/**
+	 * Return a set containing the ratio of each rating score to the total.
+	 * 
+	 * @return array
+	 **/
 	public function ratingRatios()
 	{
 		$ratios = [];
@@ -57,6 +81,12 @@ trait Reviewable
 		return $this->ratingRatios();
 	}
 
+	/**
+	 * Apply an order-by clause on the query to sort the results based on the
+	 * Bayesian average of their ratings.
+	 * 
+	 * @return void
+	 **/
 	public function scopeHighestRated($query)
 	{
 		$totalAverage = $this->reviews()->getRelated()
@@ -74,6 +104,11 @@ trait Reviewable
 			);
 	}
 
+	/**
+	 * Calculate the confidence number that is used in the Bayesian formula.
+	 * 
+	 * @return float
+	 **/
 	protected function bayesianConfidenceNumber()
 	{
 		return $this->reviews()->getRelated()
@@ -82,12 +117,20 @@ trait Reviewable
 			->count() / $this->count();;
 	}
 
+	/**
+	 * Eager load the ratings values: the average and the count
+	 * 
+	 * @return void
+	 **/
 	public function scopeWithRatings($query)
 	{
 		$query->withAvg('reviews as ratings_avg', 'rating')
 			->withCount('reviews as ratings_count');
 	}
 
+	/**
+	 * Lazy load the ratings values: the average and the count
+	 **/ 
 	public function loadRatings()
 	{
 		$this->ratings_avg = $this->reviews()->avg('rating');

@@ -62,10 +62,9 @@ trait HandlesReviews
 
 	protected function findReviewOrFail($key)
 	{
-		$user = auth()->user();
-
-		return $user->reviews()->getRelated()
-			->resolveRouteBindingQuery($user->reviews(), $key)
-			->anyApprovalStatus()->firstOrFail();
+		return auth()->user()
+			->reviews()
+			->anyApprovalStatus()
+			->findOrFail($key);
 	}
 }

@@ -19,7 +19,7 @@ trait HandlesReviews
 		if (! $reviewable = $request['reviewable_type']::find(
 			$request['reviewable_id']
 		)) {
-			abort(422, "The reviewable_id does not exist.");
+			abort(422, "The reviewable model was not found.");
 		}
 
 		$user = auth()->user();

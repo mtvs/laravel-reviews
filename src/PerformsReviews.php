@@ -34,6 +34,7 @@ trait PerformsReviews
 	/**
 	 * Determine if the user has already reviewed a reviewable model
 	 * 
+	 * @param Model $reviewable
 	 * @return boolean
 	 **/
 	public function hasAlreadyReviewed(Model $reviewable): bool
@@ -47,6 +48,7 @@ trait PerformsReviews
 	/**
 	 * Get the user's review for a reviewable model
 	 * 
+	 * @param Model $reviewable
 	 * @return Model|null
 	 **/
 	public function getReviewfor(Model $reviewable): Model|null

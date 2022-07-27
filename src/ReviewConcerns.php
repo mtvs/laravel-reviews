@@ -3,6 +3,7 @@
 namespace Mtvs\Reviews;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Mtvs\EloquentApproval\Approvable;
@@ -34,6 +35,7 @@ trait ReviewConcerns
 	/**
 	 * Add the query scope for the reviewable model
 	 * 
+	 * @param Builder $query
 	 * @return void
 	 **/
 	public function scopeReviewable($query, Model $reviewable)

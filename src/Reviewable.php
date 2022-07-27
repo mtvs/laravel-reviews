@@ -2,6 +2,7 @@
 
 namespace Mtvs\Reviews;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
@@ -85,6 +86,7 @@ trait Reviewable
 	 * Apply an order-by clause on the query to sort the results based on the
 	 * Bayesian average of their ratings.
 	 * 
+	 * @param Builder $query
 	 * @return void
 	 **/
 	public function scopeHighestRated($query)
@@ -120,6 +122,7 @@ trait Reviewable
 	/**
 	 * Eager load the ratings values: the average and the count
 	 * 
+	 * @param Builder $query
 	 * @return void
 	 **/
 	public function scopeWithRatings($query)

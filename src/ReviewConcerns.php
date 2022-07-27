@@ -21,9 +21,6 @@ trait ReviewConcerns
 
 	public function scopeReviewable($query, Model $reviewable)
 	{
-		$query->where([
-			'reviewable_type' => get_class($reviewable),
-			'reviewable_id' => $reviewable->getKey(),
-		]);
+		$query->whereMorphedTo($this->reviewable(), $reviewable);
 	}	
 }

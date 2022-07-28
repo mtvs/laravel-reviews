@@ -7,7 +7,7 @@
 		</div>
 		
 		<div class="alert alert-info" v-else>
-			No reviews yet, be the first one to review.
+			There are no reviews to be shown yet.
 		</div>
 	</div>
 </template>

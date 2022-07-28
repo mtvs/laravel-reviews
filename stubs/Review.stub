@@ -20,6 +20,11 @@ class Review extends Model
 		'rating', 'title', 'body',
 	];
 
+	/**
+	 * Get the columns which require approval when they are updated
+	 * 
+	 * @return array
+	 **/
 	public function approvalRequired()
 	{
 		return [

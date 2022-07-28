@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Validator;
 use Mtvs\Reviews\HandlesReviews;
 use Mtvs\Reviews\IndexesReviews;
 use App\Http\Controllers\Controller;
-use App\Models\Review;
 
 class ReviewsController extends Controller
 {

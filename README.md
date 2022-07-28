@@ -19,26 +19,20 @@ ratings average using the Bayesian formula.
 ## Installation And Setup
 
 ```sh
-
 composer require mtvs/laravel-reviews
-
 ```
 Then publish the files that are supposed to be in your codebase in order to be
 customizable by you. They're the review model, its database migration, its 
 database factory, the HTTP controller and the config file. 
 
 ```sh
-
 php artisan vendor:publish
-
 ```
 Next in your routes file, call the following macro on the router to register 
 the default routes. You can use `artisan route:list` to see the routes.
 
 ```php
-
-Route::reviews()
-
+Route::reviews();
 ```
 Then, if you want to use the UI components, run the following command to 
 install them. The components are written using Vue and Bootstrap.
@@ -48,16 +42,13 @@ directory to be used by the components. Don't forget to include the stylesheet
 in your views layout file.
 
 ```sh
-
 php artisan reviews:ui
-
 ```
 
 If you haven't enabled the auto registration in the `app.js` file, you need to 
 register the components manually.
 
 ```js
-
 Vue.component('reviews', require('./components/reviews/Reviews.vue').default);
 Vue.component('reviews-current', require('./components/reviews/ReviewsCurrent.vue').default);
 Vue.component('reviews-form', require('./components/reviews/ReviewsForm.vue').default);
@@ -65,7 +56,6 @@ Vue.component('reviews-list', require('./components/reviews/ReviewsList.vue').de
 Vue.component('reviews-pagination', require('./components/reviews/ReviewsPagination.vue').default);
 Vue.component('reviews-single', require('./components/reviews/ReviewsSingle.vue').default);
 Vue.component('reviews-stars', require('./components/reviews/ReviewsStars.vue').default);
-
 ````
 
 Now let's setup the models. There are some traits that are meant to be imported
@@ -74,7 +64,6 @@ reviewed. The review model's trait has already been imported in it when it was
 installed. But the other traits need to be installed manually.
 
 ```php
-
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -84,10 +73,9 @@ class User extends Authenticatable
 {
 	use PerformsReviews;
 }
-
 ```
-```php
 
+```php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -97,7 +85,6 @@ class Product extends Model
 {
     use Reviewable;
 }
-
 ```
 You also have to specify the reviewable models in the reviews config file.
 
@@ -114,9 +101,7 @@ To display the average and the count of a reviewable model's ratings, you can
 call `<x-ratings>`. 
 
 ```html
-
 <x-ratings :average="$product->ratings_avg" :count="$product->ratings_count"/>
-
 ```
 
 Do not forget to load those values on the model by calling `loadRatings()` on
@@ -128,9 +113,7 @@ To display the list of the reviews of a reviewable model and also the form to
 post them, you can call `<x-reviews>`.
 
 ```html
-
 <x-reviews :reviewable="$product"/>
-
 ```
 It also contains a call to the `<x-ratings>`.
 

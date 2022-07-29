@@ -22,9 +22,7 @@
         }
     },
     "require": {
-        "illuminate/database": "^9.0",
-        "illuminate/auth": "^9.0",
-        "illuminate/http": "^9.0",
+        "laravel/framework": "^9.0",
         "mtvs/eloquent-approval": "^5.0"
 
     },

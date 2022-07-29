@@ -12,7 +12,7 @@
 	</span>
 
 	@if($ratios)
-		<div class="card">
+		<div class="card mb-3">
 			<div class="card-body">
 				@foreach($ratios as $rating => $ratio)
 					<div class="d-flex mb-1">

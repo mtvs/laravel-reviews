@@ -1,5 +1,11 @@
 <template>
 	<div>
+		<div class="mb-3">
+			<a href="#user-review" class="btn btn-outline-primary">
+				Post a review
+			</a>
+		</div>
+
 		<div class="mb-3" v-if="paginator">
 			<reviews-list :reviews="paginator.data"></reviews-list>
 
@@ -7,7 +13,7 @@
 				@page-requested="getPage" />
 		</div>
 
-		<div>
+		<div id="user-review">
 			<reviews-current v-if="currentReview"
 				:review="currentReview"
 				@edit-requested="editRequested"

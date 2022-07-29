@@ -1,11 +1,5 @@
 <template>
 	<div>
-		<div class="mb-3">
-			<a href="#user-review" class="btn btn-outline-primary">
-				Post a review
-			</a>
-		</div>
-
 		<div class="mb-3" v-if="paginator">
 			<reviews-list :reviews="paginator.data"></reviews-list>
 

@@ -93,6 +93,9 @@ You also have to specify the reviewable models in the reviews config file.
 	\App\Models\Product::class,	
 ],
 ```
+Finally, remember to run the database migrations and compile the view components.
+You can also use the provided factory to seed the reviews.
+
 ## Usage
 
 ### The Ratings Component

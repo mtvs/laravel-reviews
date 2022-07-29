@@ -20,6 +20,8 @@ class Review extends Model
 		'rating', 'title', 'body',
 	];
 
+	protected $perPage = 9;	
+
 	/**
 	 * Get the columns which require approval when they are updated
 	 * 

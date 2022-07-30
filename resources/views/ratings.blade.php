@@ -1,6 +1,6 @@
 @if($count)
 	<span>
-		<span class="rating-stars d-inline-flex">
+		<span class="rating-stars d-inline-flex" aria-hidden="true">
 			@foreach(range(1, $max()) as $n)
 				<i class="{{ $starIcon($n) }}"></i>
 			@endforeach

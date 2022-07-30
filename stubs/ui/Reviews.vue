@@ -21,7 +21,7 @@
 				@review-updated="reviewUpdated"
 				@edit-cancelled="editCancelled"/>
 
-			<div class="alert alert-info" v-else>
+			<div class="alert alert-info" v-else role="alert">
 				Please <a href="/login">login</a> to be able to post a review.
 			</div>
 		</div>

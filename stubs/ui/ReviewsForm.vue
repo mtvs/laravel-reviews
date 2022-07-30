@@ -11,6 +11,14 @@
 			            <div :class="{'is-invalid': errors.rating}">
 			            	<reviews-stars :score="form.rating"
 			            	@score-selected="(score) => form.rating = score"/>
+
+			            	<select id="review-rating" 
+			            		class="visually-hidden"
+			            		v-model="form.rating">
+			            		<option v-for="i in 5" :value="i">
+			            			{{ i }}
+			            		</option>
+			            	</select>
 			            </div>
 
 		            	<div class="invalid-feedback" v-if="errors.rating">

@@ -6,13 +6,13 @@
 					Post a review
 				</a>
 			</div>
-			
+
 			<div class="list-group-item" v-for="review in reviews">
 				<reviews-single :review="review" />
 			</div>
 		</div>
 		
-		<div class="alert alert-info" v-else>
+		<div class="alert alert-info" role="alert" v-else>
 			There are no reviews to be shown yet.
 		</div>
 	</div>

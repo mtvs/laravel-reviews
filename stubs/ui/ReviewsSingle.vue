@@ -3,6 +3,10 @@
 		<div class="mb-1 d-flex justify-content-between">
 			<reviews-stars :score="review.rating" />
 
+			<span class="visually-hidden">
+				Rated {{ review.rating }} from 5 stars
+			</span>
+
 			<div class="text-muted">
 				<span>{{ createdAt }}</span> |
 				<span>

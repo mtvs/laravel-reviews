@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 use Mtvs\Reviews\HandlesReviews;
 use Mtvs\Reviews\IndexesReviews;
-use App\Http\Controllers\Controller;
 
 class ReviewsController extends Controller
 {

@@ -4,6 +4,10 @@
 			<div class="card-body">
 				<form @submit.prevent="review ? update() : create(); ">		
 					<div class="mb-3">
+	            		<label for="reveiew-rating" class="form-label">
+		            		Select a rating
+		            	</label>
+
 			            <div :class="{'is-invalid': errors.rating}">
 			            	<reviews-stars :score="form.rating"
 			            	@score-selected="(score) => form.rating = score"/>
@@ -15,10 +19,14 @@
 			        </div>
 
 			        <div class="mb-3">
-			            <input type="text" class="form-control"
+			        	<label for="review-title" class="form-label">
+			        		Add a title
+			        	</label>
+
+			            <input type="text" id="review-title" 
+			            	class="form-control"
 			            	:class="{'is-invalid': errors.title}" 
-			            	v-model="form.title"
-			            	placeholder="Enter the title"></input>
+			            	v-model="form.title"></input>
 
 		            	<div class="invalid-feedback" v-if="errors.title">
 		            		{{ errors.title[0] }}
@@ -26,10 +34,14 @@
 			        </div>
 
 			        <div class="mb-3">
-			            <textarea class="form-control" 
+			        	<label for="review-body" class="form-label">
+			        		Write your review
+			        	</label>
+
+			            <textarea id="review-body" 
+			            	class="form-control" 
 			            	:class="{'is-invalid': errors.body}" 
-			            	v-model="form.body"
-			            	placeholder="Write your review"></textarea>
+			            	v-model="form.body"></textarea>
 
 		            	<div class="invalid-feedback" v-if="errors.body">
 		            		{{ errors.body[0] }}

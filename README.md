@@ -56,6 +56,9 @@ Vue.component('reviews-list', require('./components/reviews/ReviewsList.vue').de
 Vue.component('reviews-pagination', require('./components/reviews/ReviewsPagination.vue').default);
 Vue.component('reviews-single', require('./components/reviews/ReviewsSingle.vue').default);
 Vue.component('reviews-stars', require('./components/reviews/ReviewsStars.vue').default);
+
+Vue.component('approval-status', require('./components/approval/ApprovalStatus.vue').default);
+Vue.component('approval-buttons', require('./components/approval/ApprovalButtons.vue').default);
 ````
 
 Now let's setup the models. There are some traits that are meant to be imported

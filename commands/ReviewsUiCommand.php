@@ -35,5 +35,7 @@ class ReviewsUiCommand extends Command
         
         $this->comment('Don\'t forget to register the UI components.');
         $this->comment('Don\'t forget to include the style sheet file.');
+
+        $this->call('approval:ui');
     }
 }

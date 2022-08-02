@@ -31,10 +31,10 @@ class ReviewsUiCommand extends Command
             public_path('font')
         );
         
-        $this->info('Reviews UI files installed successfully.');
-        
+        $this->info('The reviews UI files were installed successfully.');    
         $this->comment('Don\'t forget to register the UI components.');
         $this->comment('Don\'t forget to include the style sheet file.');
+        $this->newLine();
 
         $this->call('approval:ui');
     }

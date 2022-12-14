@@ -6,8 +6,8 @@
 			:ratios="$reviewable->ratingRatios()"/>
 
 		<reviews 
-			reviewable-set="{{ $reviewable::getSetName() }}"
-			reviewable-type="{{ get_class($reviewable) }}"
+			reviewable-set="{{ $reviewable->getSetName() }}"
+			reviewable-type="{{ $reviewable->getType() }}"
 			reviewable-id="{{ $reviewable->getKey() }}" 
 			:user="{{ json_encode(auth()->user()) }}"
 			:user-review="{{ json_encode($userReview()) }}"

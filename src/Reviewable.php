@@ -30,13 +30,18 @@ trait Reviewable
 	 * 
 	 * @return string
 	 **/
-	public static function getSetName()
+	public function getSetName()
 	{
 		$name = (new \ReflectionClass(get_called_class()))
 			->getShortName();
 
 		return Str::plural(Str::snake($name, '-'));
 	}
+
+	public function getType()
+	{
+		return get_called_class();
+	}	
 
 	/**
 	 * Return the relation to the reviews model

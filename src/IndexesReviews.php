@@ -16,7 +16,7 @@ trait IndexesReviews
 	protected function findReviewableOrFail($set, $key)
 	{
 		foreach (config('reviews.reviewables') as $reviewable) {
-			if ($reviewable::getSetName() == $set) {
+			if ((new $reviewable)->getSetName() == $set) {
 				$class = $reviewable;
 				break;
 			}

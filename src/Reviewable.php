@@ -22,6 +22,9 @@ trait Reviewable
 		});
 	}
 
+	/**
+	 * Return the type of the reviewable
+	 **/ 
 	public function getType()
 	{
 		return get_called_class();

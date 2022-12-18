@@ -22,6 +22,9 @@ class IndexesReviewsTest extends TestCase
 			ReviewFactory::new()->rejected()->make(),
 		]);
 
+		$unrelatedReview = Reviewfactory::new()
+			->approved()->create();
+
 		$request = Request::create("/reviews", 'GET', [
 			'reviewable_type' => get_class($product),
 			'reviewable_id' => $product->id,
@@ -34,5 +37,6 @@ class IndexesReviewsTest extends TestCase
 		$response->assertSee($reviews[0]->title);
 		$response->assertDontSee($reviews[1]->title);
 		$response->assertDontSee($reviews[2]->title);
+		$response->assertDontSee($unrelatedReview->title);
 	}
 }

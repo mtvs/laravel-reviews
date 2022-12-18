@@ -40,14 +40,15 @@ export default {
 
 	props: [
 		'reviewableType',
-		'reviewableSet',
 		'reviewableId',
 		'user',
 		'userReview'
 	],
 
 	created() {
-		this.getPage(`/${this.reviewableSet}/${this.reviewableId}/reviews`)
+		this.getPage(`/reviews?\
+			reviewable_type=${this.reviewableType}&\
+			reviewable_id=${this.reviewableId}`)
 	},
 
 	methods: {

@@ -22,22 +22,6 @@ trait Reviewable
 		});
 	}
 
-	/**
-	 * Get the name of the reviewable set.
-	 * 
-	 * Each reviewable model is considered a set and the set's name is the
-	 * plural form of the model name.
-	 * 
-	 * @return string
-	 **/
-	public function getSetName()
-	{
-		$name = (new \ReflectionClass(get_called_class()))
-			->getShortName();
-
-		return Str::plural(Str::snake($name, '-'));
-	}
-
 	public function getType()
 	{
 		return get_called_class();

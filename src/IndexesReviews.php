@@ -2,30 +2,25 @@
 
 namespace Mtvs\Reviews;
 
+use Illuminate\Http\Request;
+
 trait IndexesReviews
 {
-	public function index($reviewable_set, $reviewable_key)
+	public function index(Request $request)
 	{
-		$reviewable = $this->findReviewableOrFail(
-			$reviewable_set, $reviewable_key
-		);
+		$reviewableType = $request['reviewable_type'];
+		$reviewableId = $request['reviewable_id'];
 
-		return $reviewable->reviews()->paginate();
-	}
-
-	protected function findReviewableOrFail($set, $key)
-	{
-		foreach (config('reviews.reviewables') as $reviewable) {
-			if ((new $reviewable)->getSetName() == $set) {
-				$class = $reviewable;
-				break;
-			}
+		if (
+			! in_array($reviewableType, config('reviews.reviewables'))
+			|| ! $reviewable = $reviewableType::find($reviewableId)
+		) {
+			return [];
 		}
 
-		if (! isset($class)) {
-			abort(404);
-		}
+		$reviews = $reviewable->reviews()
+			->paginate()->withQueryString();
 
-		return $class::findOrFail($key);;
+		return $reviews;
 	}
 }

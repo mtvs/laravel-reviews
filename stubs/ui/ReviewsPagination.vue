@@ -3,7 +3,7 @@
 		aria-label="Reviews pages">
 		<ul class="pagination">
 			<li class="page-item" :class="{disabled: !hasPrev}">
-				<a class="page-link" href="#" @click="getPrev">
+				<a class="page-link" @click.prevent="getPrev">
 					<span aria-hidden="true">&laquo;</span>
 
 					<span>Previous</span>
@@ -11,7 +11,7 @@
 			</li>
 
 			<li class="page-item" :class="{disabled: !hasNext}">
-				<a class="page-link" href="#" @click="getNext">
+				<a class="page-link" @click.prevent="getNext">
 					<span>Next</span>
 
 					<span aria-hidden="true">&raquo;</span>

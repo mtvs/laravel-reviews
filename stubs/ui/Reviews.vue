@@ -83,6 +83,17 @@ export default {
 		reviewDeleted() {
 			this.currentReview = null
 		}
+	},
+
+	watch: {
+		paginator(newValue, oldValue) {
+			if (! oldValue) {
+				return
+			}
+
+			document.documentElement.scrollTop = 
+			document.getElementById('reviews').offsetTop
+		}
 	}
 }
 </script>

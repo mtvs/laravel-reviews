@@ -19,7 +19,8 @@ trait IndexesReviews
 		}
 
 		$reviews = $reviewable->reviews()
-			->paginate()->withQueryString();
+			->paginate(config('reviews.per_page'))
+			->withQueryString();
 
 		return $reviews;
 	}

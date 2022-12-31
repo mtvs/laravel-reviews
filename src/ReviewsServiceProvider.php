@@ -28,6 +28,8 @@ class ReviewsServiceProvider extends ServiceProvider
 			__DIR__.'/../stubs/ReviewsController.stub' => app_path('Http/Controllers/ReviewsController.php'),
 		]);
 
+		$this->mergeConfigFrom(__DIR__.'/../config/reviews.php', 'reviews');
+
 		Blade::component('reviews', Reviews::class);
 
 		Blade::component('ratings', Ratings::class);
